@@ -31,4 +31,12 @@ public class CartService implements IGeneric<Cart> {
     public void delete(Long id) {
         cartRepository.deleteById(id);
     }
+    //Tim san pham trong cart xem ton tai hay  chua
+    public Cart findProductInCart(Long userId,Long productId){
+        return cartRepository.findCartsByAppUserUserIdAndAndProductProductId(userId,productId);
+    }
+    //Dung de hien thi toan bo san pham trong gio  hang
+    public Iterable<Cart> getAllListUserCart(Long id){
+        return cartRepository.findCartsByAppUserUserId(id);
+    }
 }

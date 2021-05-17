@@ -2,11 +2,12 @@ package com.example.demo.model;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table
-public class AppRole {
+public class AppRole implements Serializable  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long roleId;

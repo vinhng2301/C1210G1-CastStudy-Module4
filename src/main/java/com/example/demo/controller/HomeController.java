@@ -22,11 +22,20 @@ public class HomeController {
     @Autowired
     UserService userService;
 
-    @RequestMapping("/home/{id}")
-    public String index(Model model, @PathVariable("id") Long id) {
-        AppUser user = userService.findById(id);
-        model.addAttribute("user", user);
-        model.addAttribute("products", productService.findAll());
-        return "/home";
+    @RequestMapping("/home")
+    public String index() {
+//        AppUser user = userService.findById(id);
+//        request.getSession().setAttribute("user",user);
+//        model.addAttribute("user", user);
+//        model.addAttribute("products", productService.findAll());
+        return "/index";
+    }
+    @RequestMapping("/homes")
+    public String index1() {
+//        AppUser user = userService.findById(id);
+//        request.getSession().setAttribute("user",user);
+//        model.addAttribute("user", user);
+//        model.addAttribute("products", productService.findAll());
+        return "/product";
     }
 }
