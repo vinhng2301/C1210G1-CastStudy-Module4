@@ -1,0 +1,30 @@
+package com.example.demo.model;
+
+
+import javax.persistence.*;
+import java.util.Set;
+
+@Entity
+@Table
+public class AppRole {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private Long roleId;
+
+    private String roleName;
+
+    public AppRole() {
+    }
+    public AppRole(Long id, String name) {
+        this.roleId = id;
+        this.roleName = name;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+}

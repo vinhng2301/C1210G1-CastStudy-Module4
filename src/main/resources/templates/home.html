@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <strong>Hello ,</strong>
+    <span th:text="${user.getUserName()}"></span>
+</div>
+<table>
+    <tr>
+        <td>Name</td>
+        <td>Size</td>
+        <td>Prices</td>
+        <td></td>
+    </tr>
+    <tr th:each="product : ${products}">
+        <td th:utext="${product.getProductName()}"></td>
+        <td th:utext="${product.getSize()}"></td>
+        <td th:utext="${product.getPrices()}"></td>
+        <td><a th:href="@{/addToCart/{id}(id=${product.getProductId()})}">Add to cart</a></td>
+    </tr>
+</table>
+</body>
+</html>
