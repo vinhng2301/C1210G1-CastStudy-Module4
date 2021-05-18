@@ -17,6 +17,7 @@ public class Cart {
     private int quantity;
     private String prices;
 
+
     public AppUser getAppUser() {
         return appUser;
     }

@@ -11,10 +11,18 @@ public class Product  {
     private Long productId;
     private String category;
     private String productName;
-    private String size;
     private boolean gender;
     private String prices;
     private String description;
+    private String img;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public Product() {
     }
@@ -23,7 +31,6 @@ public class Product  {
         this.productId = productId;
         this.category = category;
         this.productName = productName;
-        this.size = size;
         this.gender = gender;
         this.prices = prices;
         this.description = description;
@@ -53,13 +60,6 @@ public class Product  {
         this.productName = productName;
     }
 
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
 
     public boolean isGender() {
         return gender;
