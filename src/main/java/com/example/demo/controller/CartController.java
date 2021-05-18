@@ -8,14 +8,18 @@ import com.example.demo.service.CartService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.WareService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -30,8 +34,8 @@ public class CartController {
     //le ra dung url detail/product/{id} nhung k hieu sao url tu 2 chu tro len ?> la bi loi bootstrap, css
     @GetMapping("/{id}")
     public String productDetail(@PathVariable("id") Long id, Model model) {
-        Iterable<Warehouse> listThisProductInWarehouse = wareService.findAllWareByProductId(id);
-        model.addAttribute("productInWare",listThisProductInWarehouse);
+        List<String> sizeExistInWareHouse = wareService.selectSizeExist(id);
+        model.addAttribute("sizeExistInWareHouse", sizeExistInWareHouse);
         model.addAttribute("productDetail", productService.findById(id));
         return "product-detail";
     }
@@ -60,6 +64,8 @@ public class CartController {
         model.addAttribute("carts", cart);
         return "/";
     }
+
+
 
 }
 
