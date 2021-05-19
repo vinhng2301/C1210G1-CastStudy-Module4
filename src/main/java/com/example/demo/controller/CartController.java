@@ -40,32 +40,6 @@ public class CartController {
         return "product-detail";
     }
 
-    @RequestMapping("/addToCart/{id}")
-    public String getCart(@PathVariable("id") Long id, HttpSession session) {
-        AppUser user = (AppUser) session.getAttribute("user");
-        Product product = productService.findById(id);
-        Cart cart = cartService.findProductInCart(user.getUserId(), product.getProductId());
-        if (cart == null) {
-            cartService.save(new Cart(user, product, 1, product.getPrices()));
-            return "/";
-        } else {
-            int oldQuantity = cart.getQuantity();
-            int newQuantity = oldQuantity + 1;
-            cart.setQuantity(newQuantity);
-            Long prices = Long.parseLong(cart.getProduct().getPrices()) * newQuantity;
-            cartService.save(new Cart(cart.getNumberId(), user, product, newQuantity, prices.toString()));
-            return "/";
-        }
-    }
-
-    @GetMapping("/cart/{userId}")
-    public String getCartOfUser(@PathVariable Long id, Model model) {
-        Iterable<Cart> cart = cartService.getAllListUserCart(id);
-        model.addAttribute("carts", cart);
-        return "/";
-    }
-
-
 
 }
 

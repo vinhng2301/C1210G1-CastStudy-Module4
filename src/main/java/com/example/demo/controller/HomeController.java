@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.AppUser;
+import com.example.demo.service.CartService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 import org.apache.catalina.User;
@@ -15,14 +16,12 @@ public class HomeController {
     ProductService productService;
     @Autowired
     UserService userService;
+    @Autowired
+    CartService cartService;
     @RequestMapping("/home")
     public String index(Model model){
         model.addAttribute("products",productService.findAll());
-        return "/index";
+        return "index";
     }
 
-    @RequestMapping("/home2")
-    public String index2(){
-        return "/blog-detail";
-    }
 }
