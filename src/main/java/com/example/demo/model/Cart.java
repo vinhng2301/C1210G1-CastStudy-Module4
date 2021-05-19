@@ -16,18 +16,46 @@ public class Cart {
     private Product product;
     private int quantity;
     private String prices;
+    private String color;
+    private String size;
 
-
-    public AppUser getAppUser() {
-        return appUser;
+    public String getColor() {
+        return color;
     }
 
-    public Cart(Long numberId, AppUser appUser, Product product, int quantity, String prices) {
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public Cart(Long numberId, AppUser appUser, Product product, int quantity, String prices, String color, String size) {
         this.numberId = numberId;
         this.appUser = appUser;
         this.product = product;
         this.quantity = quantity;
         this.prices = prices;
+        this.color = color;
+        this.size = size;
+    }
+
+    public AppUser getAppUser() {
+        return appUser;
+    }
+
+    public Cart(AppUser appUser, Product product, int quantity, String prices, String color, String size) {
+        this.appUser = appUser;
+        this.product = product;
+        this.quantity = quantity;
+        this.prices = prices;
+        this.color = color;
+        this.size = size;
     }
 
     public Long getNumberId() {
