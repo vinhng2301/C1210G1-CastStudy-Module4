@@ -32,6 +32,8 @@ public class CartController {
     WareService wareService;
 
     //le ra dung url detail/product/{id} nhung k hieu sao url tu 2 chu tro len ?> la bi loi bootstrap, css
+    // để ý cái phân quyền để đặt tên link nehs :))
+
     @GetMapping("/{id}")
     public String productDetail(@PathVariable("id") Long id, Model model) {
         List<String> sizeExistInWareHouse = wareService.selectSizeExist(id);

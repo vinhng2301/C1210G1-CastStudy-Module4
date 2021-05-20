@@ -54,7 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable().
                 authorizeRequests()
-                .antMatchers("/api/auth/**", "/").permitAll() //những link mn đều có quyền truy cập , thêm vào bằng dấu ,
+                .antMatchers("/api/auth/**", "/**").permitAll() //những link mn đều có quyền truy cập , thêm vào bằng dấu ,những cái mà lấy id a nghĩ là lên thêm 1 / nữa như cũ ý
+
 //                .antMatchers("abcc").access("hasRoll('ADMIN')")  //quyền admin
                 .anyRequest().authenticated()  //các cái khác đều phải xác thực mới được vào
                 .and()
