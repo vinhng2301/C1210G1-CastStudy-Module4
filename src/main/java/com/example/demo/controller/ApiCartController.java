@@ -2,18 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.model.AppUser;
 import com.example.demo.model.Cart;
-import com.example.demo.model.Product;
+
 import com.example.demo.service.CartService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.SessionScope;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -36,7 +32,6 @@ public class ApiCartController {
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-
     @PostMapping()
     public ResponseEntity<Cart> addToCart(@RequestBody Cart cart) {
         Long indexOfProductInCart = cartService.checkExist(cart);
@@ -57,13 +52,29 @@ public class ApiCartController {
     }
 
     @GetMapping("/list/{userId}")
-    public ResponseEntity<List<Cart>> showCart(@PathVariable("userId") Long id) {
+    public ResponseEntity<List<Cart>> showCart(@PathVariable("userId") Long id){
         List<Cart> list = (List<Cart>) cartService.getListCartByUserId(id);
         if (list.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(list, HttpStatus.OK);
         }
+    }
+
+    @DeleteMapping("/product")
+    public ResponseEntity<Cart> deleteProduct(@RequestBody Cart cart) {
+        Long indexThisProduct = cartService.checkExist(cart);
+        cartService.delete(indexThisProduct);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping("{numberId}/{quantity}/{prices}")
+    public ResponseEntity<Cart> updataCart(@PathVariable("numberId") Long id, @PathVariable("quantity") int quantity, @PathVariable("prices") String prices) {
+        Cart cart = cartService.findById(id);
+        cart.setQuantity(quantity);
+        cart.setPrices(prices);
+        cartService.save(cart);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

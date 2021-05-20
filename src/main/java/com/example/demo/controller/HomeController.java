@@ -28,14 +28,6 @@ public class HomeController {
     @Autowired
     CartService cartService;
 
-    @RequestMapping("home/{username}")
-    public String index(Model model, HttpSession session, @PathVariable("username") String account) {
-        AppUser user1 = userService.findUserByAccount(account);
-        session.setAttribute("user", user1);
-        model.addAttribute("user", user1);
-        return "djtmeThymleaf";
-    }
-
     @RequestMapping("/home")
     public String getHome(Model model) {
         model.addAttribute("products", productService.findAll());
