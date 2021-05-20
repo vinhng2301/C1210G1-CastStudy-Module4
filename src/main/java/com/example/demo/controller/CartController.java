@@ -39,7 +39,5 @@ public class CartController {
         model.addAttribute("productDetail", productService.findById(id));
         return "product-detail";
     }
-
-
 }
 

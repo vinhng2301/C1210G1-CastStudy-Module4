@@ -1,22 +1,75 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
-@Table
 @Entity
-public class AppUser implements Serializable {
-
+@Table(name = "appuser",  uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "username"
+        }),
+        @UniqueConstraint(columnNames = {
+                "email"
+        })
+})
+public class AppUser {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    private String userName;
-    private String email;
-    private String phone;
+    @NotBlank
+    @Size(max = 50)
+    private String username;
+
+    @NotBlank
+    @Size( max = 50)
     private String account;
+
+    @NaturalId
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    private String email;
+
+    @JsonIgnore
+    @NotBlank
+    @Size(min = 6 ,max = 100)
     private String password;
-    @ManyToOne
-    @JoinColumn(name="role_id")
-    private AppRole appRole;
+
+    @NotBlank
+    @Size(min = 10 , max = 10)
+    private String phone;
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles" ,
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<AppRole> appRole = new HashSet<>();
+
+    public AppUser(Long userId, @NotBlank @Size(max = 50) String username, @NotBlank @Size(max = 50) String account, @NotBlank @Size(max = 50) @Email String email, @NotBlank @Size(min = 6, max = 100) String password, @NotBlank @Size(min = 10, max = 10) String phone, Set<AppRole> appRole) {
+        this.userId = userId;
+        this.username = username;
+        this.account = account;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.appRole = appRole;
+    }
+
+    public AppUser(@NotBlank @Size(max = 50) String username, @NotBlank @Size(max = 50) String account, @NotBlank @Size(max = 50) @Email String email, @NotBlank @Size(min = 6, max = 100) String password, @NotBlank @Size(min = 10, max = 10) String phone) {
+        this.username = username;
+        this.account = account;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+    }
 
     public AppUser() {
     }
@@ -29,28 +82,12 @@ public class AppUser implements Serializable {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getAccount() {
@@ -61,6 +98,14 @@ public class AppUser implements Serializable {
         this.account = account;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -69,21 +114,19 @@ public class AppUser implements Serializable {
         this.password = password;
     }
 
-    public AppRole getAppRole() {
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Set<AppRole> getAppRole() {
         return appRole;
     }
 
-    public void setAppRole(AppRole appRole) {
-        this.appRole = appRole;
-    }
-
-    public AppUser(Long userId, String userName, String email, String phone, String account, String password, AppRole appRole) {
-        this.userId = userId;
-        this.userName = userName;
-        this.email = email;
-        this.phone = phone;
-        this.account = account;
-        this.password = password;
+    public void setAppRole(Set<AppRole> appRole) {
         this.appRole = appRole;
     }
 }
