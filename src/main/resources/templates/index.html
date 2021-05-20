@@ -413,18 +413,34 @@ Proceed to Checkout
     }
 
     function minus2(a) {
-        let idQuantity = 'q' + a;
+        let userId = 1,
+            let
+        idQuantity = 'q' + a;
         let idProduct = 'p' + a;
         let quantity = parseInt(document.getElementById(idQuantity).value);
         let idTotalPrices = 'total' + a;
         if (quantity >= 1) {
             let newQuantity = quantity - 1;
             total = parseInt(document.getElementById(idProduct).innerText) * (parseInt(newQuantity));
-            content = `<td class="column-5" id='${idTotalPrices}'>${total}</td> <span>$</span>`
-            document.getElementById(idTotalPrices).innerHTML = content;
-            document.getElementById(idQuantity).value = newQuantity;
+            // content = `<td class="column-5" id='${idTotalPrices}'>${total}</td> <span>$</span>`
+            // document.getElementById(idTotalPrices).innerHTML = content;
+            // document.getElementById(idQuantity).value = newQuantity;
+            let newCartUpdate = {
+                quantity: newQuantity
+            }
+            // $.ajax({
+            //     headers: {
+            //         'Accept': 'application/json',
+            //         'Content-Type': 'application/json'
+            //     },
+            //     type: "POST",
+            //     url: ih,
+            //     data: JSON.stringify(newCartUpdate),
+            //     success: showCart()
+            // })
         }
     }
+
 
     function plus2(a) {
         let idQuantity = 'q' + a;

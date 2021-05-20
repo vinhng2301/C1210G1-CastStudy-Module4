@@ -11,11 +11,10 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long numberId;
 
-    @OneToOne
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     private AppUser appUser;
-    @JsonFormat
-    @OneToOne
+    @ManyToOne()
     @JoinColumn(name = "product_id")
     private Product product;
     private int quantity;

@@ -1098,7 +1098,7 @@
 
             success: function (data) {
                 console.log(data)
-                let content = ""
+                let content =""
                 for (let i = 0; i < data.length; i++) {
                     content += getColor(data[i])
                 }
@@ -1111,7 +1111,7 @@
     }
 
     function getColor(data) {
-        return `<option value=${data.color}">${data.color}</option>`
+        return `<option value=${data.color}>${data.color}</option>`
     }
 
 
@@ -1122,14 +1122,16 @@
         let sz = $('#selectSize').val()
         let c = $('#select-option-color').val()
         let productInCart = {
-            product: {
-                productId: pId
-            }
-            ,
             quantity: ql,
             prices: prs,
             size: sz,
-            color: c
+            color: c,
+            product: {
+                productId: pId
+            },
+            appUser: {
+                userId: 1
+            }
         }
         $.ajax({
             headers: {
@@ -1138,9 +1140,9 @@
             },
             type: "POST",
             data: JSON.stringify(productInCart),
-            URL: "http://localhost:8080/api/cart",
+            url: "http://localhost:8080/api/cart",
             success: console.log("success"),
-            error: alert("loi")
+            error: console.log("err")
         })
 
     }

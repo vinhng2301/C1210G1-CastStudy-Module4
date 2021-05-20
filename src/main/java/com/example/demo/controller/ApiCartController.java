@@ -40,7 +40,7 @@ public class ApiCartController {
     @PostMapping()
     public ResponseEntity<Cart> addToCart(@RequestBody Cart cart) {
         Long indexOfProductInCart = cartService.checkExist(cart);
-        if (indexOfProductInCart!=-1) {
+        if (indexOfProductInCart != -1) {
             Cart thisProductInCart = cartService.findById(indexOfProductInCart);
             int oldQuantity = thisProductInCart.getQuantity();
             int newQuantity = oldQuantity + cart.getQuantity();
@@ -55,14 +55,14 @@ public class ApiCartController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
+
     @GetMapping("/list/{userId}")
-    public ResponseEntity<List<Cart>> showCart(@PathVariable("userId") Long id){
-         List<Cart> list = (List<Cart>) cartService.getListCartByUserId(id);
-        if(list.isEmpty()){
+    public ResponseEntity<List<Cart>> showCart(@PathVariable("userId") Long id) {
+        List<Cart> list = (List<Cart>) cartService.getListCartByUserId(id);
+        if (list.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else {
-            return  new ResponseEntity<>(list,HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(list, HttpStatus.OK);
         }
     }
 

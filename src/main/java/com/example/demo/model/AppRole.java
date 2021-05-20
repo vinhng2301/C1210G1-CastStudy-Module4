@@ -21,6 +21,14 @@ public class AppRole implements Serializable  {
         this.roleName = name;
     }
 
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
     public String getRoleName() {
         return roleName;
     }

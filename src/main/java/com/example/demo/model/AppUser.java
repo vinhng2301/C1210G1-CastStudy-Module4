@@ -10,13 +10,20 @@ import java.io.Serializable;
 public class AppUser implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     private String userName;
     private String email;
     private String phone;
     private String account;
     private String password;
+
+    public AppUser(Long userId) {
+        this.userId = userId;
+    }
+
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="role_id")
     private AppRole appRole;
 
