@@ -206,7 +206,7 @@
 
                                 <div class="size-204 respon6-next">
                                     <div class="rs1-select2 bor8 bg0">
-                                        <select class="js-select2" name="color" id="select-option">
+                                        <select class="js-select2" name="color" id="select-option-color">
                                             <option>Please choose size first ^ ^</option>
                                         </select>
                                         <div class="dropDownSelect2"></div>
@@ -272,7 +272,7 @@
                 <div class="tab01">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item p-b-10">
+                        <li class="nav-item p-b-10" onclick="test()">
                             <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a>
                         </li>
 
@@ -1097,14 +1097,15 @@
             url: url,
 
             success: function (data) {
+                console.log(data)
                 let content = ""
                 for (let i = 0; i < data.length; i++) {
                     content += getColor(data[i])
                 }
-                document.getElementById("select-option").innerHTML = content;
+                document.getElementById("select-option-color").innerHTML = content;
             },
             error: function () {
-                alert("Please try again")
+                alert("errou")
             }
         });
     }
@@ -1115,9 +1116,33 @@
 
 
     function addToCart() {
-        productId = $('#productId').val()
-        // quantity = $('#quantity').val()
-        alert(quantity)
+        let pId = $('#productId').val()
+        let ql = $('#quantity').val()
+        let prs = parseInt($('#product-prices').val()) * (parseInt(ql))
+        let sz = $('#selectSize').val()
+        let c = $('#select-option-color').val()
+        let productInCart = {
+            product: {
+                productId: pId
+            }
+            ,
+            quantity: ql,
+            prices: prs,
+            size: sz,
+            color: c
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            data: JSON.stringify(productInCart),
+            URL: "http://localhost:8080/api/cart",
+            success: console.log("success"),
+            error: alert("loi")
+        })
+
     }
 
     // <span id="prices-change" className="mtext-106 cl2" th:utext="${productDetail.getPrices()} +'$'">

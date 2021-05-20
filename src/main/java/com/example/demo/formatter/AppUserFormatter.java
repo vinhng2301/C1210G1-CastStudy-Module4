@@ -4,12 +4,15 @@ import com.example.demo.model.AppUser;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
+import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.util.Locale;
-
+@Component
 public class AppUserFormatter implements Formatter<AppUser> {
    private UserService userService;
+   @Autowired
+   UserService userService2;
 
     public AppUserFormatter(UserService userService) {
         this.userService = userService;
@@ -17,7 +20,7 @@ public class AppUserFormatter implements Formatter<AppUser> {
 
     @Override
     public AppUser parse(String text, Locale locale) throws ParseException {
-        AppUser user = userService.findById(Long.parseLong(text));
+        AppUser user = userService2.findById(Long.parseLong(text));
         return user;
     }
 

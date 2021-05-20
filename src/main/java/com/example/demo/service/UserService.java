@@ -29,4 +29,8 @@ public class UserService implements IGeneric<AppUser> {
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
+
+    public AppUser findUserByAccount(String accout) {
+        return userRepository.findAppUserByAccount(accout);
+    }
 }

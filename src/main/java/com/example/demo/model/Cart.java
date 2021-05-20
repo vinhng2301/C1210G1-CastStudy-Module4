@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,9 +10,11 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long numberId;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private AppUser appUser;
+    @JsonFormat
     @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
@@ -47,6 +51,14 @@ public class Cart {
 
     public AppUser getAppUser() {
         return appUser;
+    }
+
+    public Cart(Product product, int quantity, String prices, String color, String size) {
+        this.product = product;
+        this.quantity = quantity;
+        this.prices = prices;
+        this.color = color;
+        this.size = size;
     }
 
     public Cart(AppUser appUser, Product product, int quantity, String prices, String color, String size) {
