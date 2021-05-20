@@ -1,23 +1,23 @@
 package com.example.demo.dto.request;
 
 public class LoginForm {
-    private String account;
+    private String username;
     private String password;
 
     public LoginForm() {
     }
 
-    public LoginForm(String account, String password) {
-        this.account = account;
+    public LoginForm(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
-    public String getAccount() {
-        return account;
+    public String getUsername() {
+        return username;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

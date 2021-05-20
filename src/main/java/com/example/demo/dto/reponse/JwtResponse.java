@@ -8,16 +8,16 @@ public class JwtResponse {
     private Long userId;
     private String token;
     private String type = "Bearer";
+    private String name;
     private String username;
-    private String account;
     private String email;
     private String phone;
     private Collection<? extends GrantedAuthority> appRole;
 
-    public JwtResponse(String token, String username, String account, String email, String phone, Collection<? extends GrantedAuthority> appRole) {
+    public JwtResponse(String token, String name, String username, String email, String phone, Collection<? extends GrantedAuthority> appRole) {
         this.token = token;
+        this.name = name;
         this.username = username;
-        this.account = account;
         this.email = email;
         this.phone = phone;
         this.appRole = appRole;
@@ -47,20 +47,20 @@ public class JwtResponse {
         this.type = type;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
     }
 
     public String getEmail() {

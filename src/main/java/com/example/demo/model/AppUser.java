@@ -25,11 +25,11 @@ public class AppUser {
     private Long userId;
     @NotBlank
     @Size(max = 50)
-    private String username;
+    private String name;
 
     @NotBlank
     @Size( max = 50)
-    private String account;
+    private String username;
 
     @NaturalId
     @NotBlank
@@ -53,19 +53,19 @@ public class AppUser {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<AppRole> appRole = new HashSet<>();
 
-    public AppUser(Long userId, @NotBlank @Size(max = 50) String username, @NotBlank @Size(max = 50) String account, @NotBlank @Size(max = 50) @Email String email, @NotBlank @Size(min = 6, max = 100) String password, @NotBlank @Size(min = 10, max = 10) String phone, Set<AppRole> appRole) {
+    public AppUser(Long userId, @NotBlank @Size(max = 50) String name, @NotBlank @Size(max = 50) String username, @NotBlank @Size(max = 50) @Email String email, @NotBlank @Size(min = 6, max = 100) String password, @NotBlank @Size(min = 10, max = 10) String phone, Set<AppRole> appRole) {
         this.userId = userId;
+        this.name = name;
         this.username = username;
-        this.account = account;
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.appRole = appRole;
     }
 
-    public AppUser(@NotBlank @Size(max = 50) String username, @NotBlank @Size(max = 50) String account, @NotBlank @Size(max = 50) @Email String email, @NotBlank @Size(min = 6, max = 100) String password, @NotBlank @Size(min = 10, max = 10) String phone) {
+    public AppUser(@NotBlank @Size(max = 50) String name, @NotBlank @Size(max = 50) String username, @NotBlank @Size(max = 50) @Email String email , @NotBlank @Size(min = 10, max = 10) String phone, @NotBlank @Size(min = 6, max = 100) String password) {
+        this.name = name;
         this.username = username;
-        this.account = account;
         this.email = email;
         this.password = password;
         this.phone = phone;
@@ -82,20 +82,20 @@ public class AppUser {
         this.userId = userId;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
     }
 
     public String getEmail() {

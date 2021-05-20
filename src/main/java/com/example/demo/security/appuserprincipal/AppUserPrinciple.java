@@ -14,18 +14,18 @@ import java.util.stream.Collectors;
 
 public class AppUserPrinciple implements UserDetails {
     private Long userId;
+    private String name;
     private String username;
-    private String account;
     private String email;
     @JsonIgnore
     private String password;
     private String phone;
     private Collection<? extends GrantedAuthority> appRole;
 
-    public AppUserPrinciple(Long userId, String username, String account, String email, String password, String phone, Collection<? extends GrantedAuthority> appRole) {
+    public AppUserPrinciple(Long userId, String name, String username, String email, String password, String phone, Collection<? extends GrantedAuthority> appRole) {
         this.userId = userId;
+        this.name = name;
         this.username = username;
-        this.account = account;
         this.email = email;
         this.password = password;
         this.phone = phone;
@@ -39,8 +39,8 @@ public class AppUserPrinciple implements UserDetails {
 
         return new AppUserPrinciple(
                 appuser.getUserId(),
+                appuser.getName(),
                 appuser.getUsername(),
-                appuser.getAccount(),
                 appuser.getEmail(),
                 appuser.getPassword(),
                 appuser.getPhone(),
@@ -56,20 +56,19 @@ public class AppUserPrinciple implements UserDetails {
         this.userId = userId;
     }
 
-    public String getusername() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUserName(){
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
     }
 
     public String getEmail() {
@@ -92,7 +91,7 @@ public class AppUserPrinciple implements UserDetails {
 
     @Override
     public String getUsername() {
-        return account;
+        return username;
     }
 
     @Override

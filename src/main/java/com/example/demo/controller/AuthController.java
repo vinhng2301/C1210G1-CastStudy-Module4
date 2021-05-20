@@ -31,6 +31,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/auth")
+//có quyền vào để đăng nhập hoặc đăng ký
 public class AuthController {
     @Autowired
     UserService appUserService;
@@ -46,16 +47,16 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest, HttpSession session) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getAccount(), loginRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtProvider.generateJwtToken(authentication);
         AppUserPrinciple userDetails = (AppUserPrinciple) authentication.getPrincipal();
-        session.setAttribute("user", userDetails);
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getAccount(),
+        session.setAttribute("user", userDetails); //dăng lý session user
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(),
                 userDetails.getUsername(), userDetails.getEmail(), userDetails.getPhone(),
-                userDetails.getAuthorities()
+                userDetails.getAuthorities() //cái này là role nhé
         ));
     }
 
@@ -67,19 +68,29 @@ public class AuthController {
         if (appUserService.existsByEmail(signUpForm.getEmail())) {
             return new ResponseEntity<>(new ResponseMessage("email is existed"), HttpStatus.BAD_REQUEST);
         }
-        AppUser appUser = new AppUser(signUpForm.getUsername(), signUpForm.getAccount(), signUpForm.getEmail(), signUpForm.getPhone(), passwordEncoder.encode(signUpForm.getPassword()));
+        AppUser appUser = new AppUser(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), signUpForm.getPhone(), passwordEncoder.encode(signUpForm.getPassword()));
         Set<String> strRoles = signUpForm.getAppRole();
         Set<AppRole> roles = new HashSet<>();
-        strRoles.forEach(role -> {
-
-            AppRole userRole = roleService.findByName(RoleName.USER)
-                    .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
-            roles.add(userRole);
-
-        });
+//        strRoles.forEach(role -> {
+//
+//            switch (role) {
+//                case "admin":
+//                    AppRole adminRole = roleService.findByName(RoleName.ADMIN)
+//                            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
+//                    roles.add(adminRole);
+//
+//                    break;
+//                default:
+                    AppRole userRole = roleService.findByName(RoleName.USER)
+                            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
+                    roles.add(userRole);
+//            }
+//        });
+        // để đây sau a sửa lại mặc định là user, tk admin tự fix trong database
         appUser.setAppRole(roles);
         appUserService.save(appUser);
-        return new ResponseEntity<>(new ResponseMessage("registered success"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseMessage("registered success"), HttpStatus.OK); // a tra trên mạng là cái dưới , không biết nó có phải chỉ là thông báo không vì nó vẫn tạo đc bt
+//        return ResponseEntity.ok(new ResponseMessage("registered success");
     }
 
 //    @DeleteMapping("/logout")
@@ -98,5 +109,5 @@ public class AuthController {
 //                    }));
 //        }
 //    }
-
+/// có vẻ như logout chỉ cần remove session
 }

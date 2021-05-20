@@ -1,6 +1,5 @@
 package com.example.demo.security.appuserprincipal;
 
-
 import com.example.demo.model.AppUser;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
