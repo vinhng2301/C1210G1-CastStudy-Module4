@@ -1,11 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.AppUser;
-import com.example.demo.model.Cart;
+import com.example.demo.model.*;
 
-import com.example.demo.service.CartService;
-import com.example.demo.service.ProductService;
-import com.example.demo.service.UserService;
+import com.example.demo.repository.OrderRepository;
+import com.example.demo.service.*;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +21,10 @@ public class ApiCartController {
     UserService userService;
     @Autowired
     ProductService productService;
+    @Autowired
+    OrderService orderService;
+    @Autowired
+    OrderHistoryService orderHistoryService;
 
     @GetMapping
     public ResponseEntity<List<Cart>> getAllListCart(HttpSession session) {
@@ -80,6 +83,13 @@ public class ApiCartController {
     public ResponseEntity<Cart> delete(@PathVariable("numberId") Long id ){
         cartService.delete(id);
         return  new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PutMapping()
+    public ResponseEntity<List<Cart>> doBuy(@RequestBody Orders order){
+        AppUser user = userService.findById(order.getAppUser().getUserId());
+        order.setAppUser(user);
+        orderService.save(order);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

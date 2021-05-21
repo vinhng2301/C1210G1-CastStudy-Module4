@@ -470,12 +470,12 @@
             <!-- Search product -->
             <div class="dis-none panel-search w-full p-t-10 p-b-15">
                 <div class="bor8 dis-flex p-l-15">
-                    <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+                    <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04" onclick="searchProduct()">
                         <i class="zmdi zmdi-search"></i>
                     </button>
 
                     <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product"
-                           placeholder="Search">
+                           placeholder="Search" id="search-key">
                 </div>
             </div>
 
@@ -1164,9 +1164,15 @@
 <th class="column-5">Total</th>
 </tr>`
 
-                for (i = 0; i < data.length; i++) {
+                totalPay = 0;
+                for (let i = 0; i < data.length; i++) {
+                    //  totalPay += parseInt(data[i].prices)
+                    // console.log(totalPay)
                     content += addData(data[i])
                 }
+
+                userName = data[0].appUser.name
+                phone = data[0].appUser.phone
                 content += `</table>
 </div>
 
@@ -1201,7 +1207,7 @@ Subtotal:
 
 <div class="size-209">
 <span class="mtext-110 cl2" id="total-to-pay">
-$79.65
+<p>$</p>${totalPay}
 </span>
 </div>
 </div>
@@ -1220,24 +1226,20 @@ chot don di
 
 <div class="p-t-15">
 <span class="stext-112 cl8">
-Calculate Shipping
+Please complete all information
 </span>
-
 <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-<select class="js-select2" name="time">
-<option>Select a country...</option>
-<option>USA</option>
-<option>UK</option>
-</select>
-<div class="dropDownSelect2"></div>
 </div>
 
 <div class="bor8 bg0 m-b-12">
-<input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="state" placeholder="State /  country">
+<input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="state" id="receiver" value="${userName}"  placeholder="receive">
+</div>
+<div class="bor8 bg0 m-b-12">
+<input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" id="address" name="state" placeholder="State/Country">
 </div>
 
 <div class="bor8 bg0 m-b-22">
-<input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="Postcode / Zip">
+<input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" id="phone" name="postcode" placeholder="phone" value="${phone}">
 </div>
 
 <div class="flex-w">
@@ -1258,8 +1260,9 @@ Total:
 </div>
 
 <div class="size-209 p-t-1">
+<p>$</p>
 <span class="mtext-110 cl2">
-$79.65
+${totalPay}
 </span>
 </div>
 </div>
@@ -1282,6 +1285,7 @@ Proceed to Checkout
     }
 
     function addData(a) {
+        totalPay += parseInt(a.prices)
         return `<tr class="table_row" >
 <td class="column-1">
 <div class="how-itemcart1">
@@ -1343,7 +1347,29 @@ Proceed to Checkout
     }
 
     function buy() {
+        let receiver = $('#receiver').val();
+        let phone = $('#phone').val();
+        let address = $('#address').val()
+        let information = receiver + '-' + phone + '-'+ address;
+        let newOrder = {
+            total: totalPay,
+            information: information,
+            appUser: {
+                userId: 1
+            }
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            data:JSON.stringify(newOrder),
+            type:"POST",
+            url:"/api/cart",
+            success:alert("Order Sucess"),
+            error: alert("ERROR")
 
+        })
     }
 
     function deleteInCart(a) {
@@ -1355,5 +1381,17 @@ Proceed to Checkout
                 success: showCart()
             })
         }
+    }
+</script>
+<script>
+    function searchProduct() {
+        let key = document.getElementById("search-key").value
+        $.ajax({
+            type: "GET",
+            url: `api/warehouse/${key}`,
+            success: function (data) {
+
+            }
+        })
     }
 </script>

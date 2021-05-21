@@ -29,4 +29,7 @@ public class ProductService implements IGeneric<Product> {
     public void delete(Long id) {
         productRepository.deleteById(id);
     }
+    public Iterable<Product> listProductFindByName(String name){
+        return productRepository.findProductByProductNameContaining(name);
+    }
 }

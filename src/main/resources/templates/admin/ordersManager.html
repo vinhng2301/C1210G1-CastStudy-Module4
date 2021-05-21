@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+          crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+          crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row g-0">
+        <div class="col-sm-6 col-md-8"><a href="">User Manager</a></div>
+        <div class="col-6 col-md-4">
+
+        </div>
+    </div>
+    <div>
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>#number</th>
+                <th>account</th>
+                <th>date-order</th>
+                <th>$total</th>
+                <th>status</th>
+                <th>view</th>
+            </tr>
+            <tr th:each="order:${orders}">
+                <td th:utext="${order.getOrderId()}"></td>
+                <td th:utext="${order.getAppUser().getName()}"></td>
+                <td th:utext="${order.getOrderDate()}"></td>
+                <td th:utext="${order.getTotal()}"></td>
+                <td><select name="" id="">
+                    <option value="wait">-wait-</option>
+                    <option value="shipping">-shipping-</option>
+                    <option value="done">-done-</option>
+                </select>
+                </td>
+                <td><a style="text-decoration: none" href="#">View</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

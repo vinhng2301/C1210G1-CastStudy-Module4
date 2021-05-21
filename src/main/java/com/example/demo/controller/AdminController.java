@@ -1,9 +1,14 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Orders;
 import com.example.demo.model.Product;
+import com.example.demo.repository.OrderRepository;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,9 +22,10 @@ import java.util.Optional;
 public class AdminController {
     @Autowired
     private ProductService productService;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private OrderRepository orderRepository;
 
     @GetMapping("/create-product")
     public ModelAndView showCreateForm() {
@@ -67,6 +73,12 @@ public class AdminController {
     public ModelAndView listUsers() {
         ModelAndView modelAndView = new ModelAndView("/user/list");
         modelAndView.addObject("users", userService.findAll());
+        return modelAndView;
+    }
+    @GetMapping("/order-manager")
+    public ModelAndView showListOrders(@PageableDefault(size = 7) Pageable pageable){
+        Page<Orders> ordersPage = orderRepository.findAll(pageable);
+        ModelAndView modelAndView = new ModelAndView("/admin/ordersManager","orders",ordersPage);
         return modelAndView;
     }
 }
