@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,9 @@ import java.util.Optional;
 public class AdminController {
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/create-product")
     public ModelAndView showCreateForm() {
@@ -56,6 +60,13 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView("/product/edit");
         modelAndView.addObject("product", product);
         modelAndView.addObject("message", "Product updated");
+        return modelAndView;
+    }
+
+    @GetMapping("/users")
+    public ModelAndView listUsers() {
+        ModelAndView modelAndView = new ModelAndView("/user/list");
+        modelAndView.addObject("users", userService.findAll());
         return modelAndView;
     }
 }

@@ -7,7 +7,7 @@
 <body>
 <h1>Create product</h1>
 <p>
-<!--    <a href="/products">Product list</a>-->
+    <a href="/products">Product list</a>
 </p>
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
@@ -25,9 +25,9 @@
         <tr>
             <td>Gender:</td>
             <td><input type="radio" th:field="*{gender}" th:value="true" />
-                <label th:text="male"/>
+                <label th:text="Male"/>
                 <input type="radio" th:field="*{gender}" th:value="false" />
-                <label th:text="female"/>
+                <label th:text="Female"/>
             </td>
         </tr>
         <tr>

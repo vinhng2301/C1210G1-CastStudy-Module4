@@ -25,7 +25,11 @@
         </tr>
         <tr>
             <td>Gender:</td>
-            <td><input type="text" th:field="*{gender}"/></td>
+            <td><input type="radio" th:field="*{gender}" th:value="true" />
+                <label th:text="Male"/>
+                <input type="radio" th:field="*{gender}" th:value="false" />
+                <label th:text="Female"/>
+            </td>
         </tr>
         <tr>
             <td>Prices:</td>
