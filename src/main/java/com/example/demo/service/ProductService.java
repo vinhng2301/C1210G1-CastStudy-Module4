@@ -23,7 +23,6 @@ public class ProductService implements IGeneric<Product> {
     @Override
     public Product findById(Long id) {
         return productRepository.findById(id).get();
-
     }
 
     @Override
