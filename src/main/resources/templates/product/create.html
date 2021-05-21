@@ -7,17 +7,13 @@
 <body>
 <h1>Create product</h1>
 <p>
-    <a href="/products">Product list</a>
+<!--    <a href="/products">Product list</a>-->
 </p>
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
 </th:block>
 <form th:action="@{/create-product}" th:object="${product}" method="post">
     <table>
-        <tr>
-            <td>Product name:</td>
-            <td><input type="text" th:field="*{product_name}"/></td>
-        </tr>
         <tr>
             <td>Category:</td>
             <td><input type="text" th:field="*{category}"/></td>
@@ -28,11 +24,19 @@
         </tr>
         <tr>
             <td>Gender:</td>
-            <td><input type="text" th:field="*{gender}"/></td>
+            <td><input type="radio" th:field="*{gender}" th:value="true" />
+                <label th:text="male"/>
+                <input type="radio" th:field="*{gender}" th:value="false" />
+                <label th:text="female"/>
+            </td>
         </tr>
         <tr>
             <td>Prices:</td>
             <td><input type="text" th:field="*{prices}"/></td>
+        </tr>
+        <tr>
+            <td>Product Name:</td>
+            <td><input type="text" th:field="*{productName}"/></td>
         </tr>
         <tr>
             <td></td>
