@@ -25,10 +25,10 @@ public class ApiReview {
 
     @PostMapping()
     public ResponseEntity<Review> addReview(@RequestBody Review review) {
-        if (review.getComment().trim() != "") {
+        if (review.getComment().trim()!="") {
             reviewService.save(review);
             return new ResponseEntity<>(review,HttpStatus.OK );
         }
-        else  return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else  return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
