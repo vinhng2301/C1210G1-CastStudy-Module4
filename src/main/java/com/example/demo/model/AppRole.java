@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "app_role")
-public class AppRole {
+public class AppRole implements Serializable {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private long id;

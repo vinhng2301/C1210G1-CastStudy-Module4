@@ -8,7 +8,7 @@ import java.util.List;
 
 @Table
 @Entity
-public class Product  {
+public class Product implements Serializable  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
