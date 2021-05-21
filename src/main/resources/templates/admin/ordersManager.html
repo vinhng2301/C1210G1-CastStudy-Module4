@@ -30,21 +30,80 @@
                 <th>status</th>
                 <th>view</th>
             </tr>
-            <tr th:each="order:${orders}">
+            <tr th:each="order:${orders}" id="rePrint">
                 <td th:utext="${order.getOrderId()}"></td>
                 <td th:utext="${order.getAppUser().getName()}"></td>
                 <td th:utext="${order.getOrderDate()}"></td>
                 <td th:utext="${order.getTotal()}"></td>
-                <td><select name="" id="">
-                    <option value="wait">-wait-</option>
+                <td><select name="" th:id="${order.getOrderId()}" th:onchange="|changeStatus('${order.getOrderId()}')|">
+                    <option value="wait" th:if="${order.status}=='wait'">-wait-</option>
                     <option value="shipping">-shipping-</option>
                     <option value="done">-done-</option>
                 </select>
                 </td>
-                <td><a style="text-decoration: none" href="#">View</a></td>
+                <td><a style="text-decoration: none" href="#" th:onclick="|seeThisOrdersDetail('${order.getOrderId()}')|">View</a></td>
             </tr>
         </table>
+    </div>
+    <div>
+        <div>
+            <a th:href="@{'/home'(page=${orders.number-1})}" th:if="${orders.hasPrevious()}">Back</a>
+            <span th:utext="${orders.number+1}"></span>/<span th:utext="${orders.totalPages}"></span>
+            <a th:href="@{'/home'(page=${orders.number+1})}" th:if="${orders.hasNext()}">Next</a>
+        </div>
     </div>
 </div>
 </body>
 </html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    function changeStatus(id) {
+        let status = document.getElementById(id).value
+        if (confirm("Do you want to change #order" + id + "'s status")) {
+            $.ajax({
+                type: "PUT",
+                url: `/api/admin/${id}/${status}`,
+                success: function (data) {
+                    let content = "";
+                    console.log(data)
+                    if (data.status == "shipping") {
+                        content += `
+                    <option value="shipping">-shipping-</option>
+                    <option value="done">-done-</option>`
+                        document.getElementById(id).innerHTML = content;
+                    } else if (data.status == "done") {
+                        deleteOneOrder(id)
+                    }
+
+                }
+            })
+        }
+    }
+
+    // xoa san pham nay khi o trang thai 'done'
+    function deleteOneOrder(id) {
+        $.ajax({
+            type: "DELETE",
+            url: `api/admin/${id}`,
+            success(data) {
+                alert("Delivery successful");
+                for(i=0;i<data.lenght;i++){
+                    window.rePrint(data[i])
+                };
+            }
+        })
+    }
+    function rePrint(a){
+               let content=`<td></td>
+                <td>${a.appUser.name}</td>
+                <td>${a.orderDate}</td>
+                <td>${a.total}</td>
+                <td><select name="" th:id="${a.orderId}" onchange="|changeStatus('${a.orderId}')|">
+                    <option value="wait" th:if="${a.status}=='wait'">-wait-</option>
+                    <option value="shipping">-shipping-</option>
+                    <option value="done">-done-</option>
+                </select>
+                </td>
+                <td><a style="text-decoration: none" href="#" th:onclick="|seeThisOrdersDetail('${a.orderId}')|">View</a></td>`
+    }
+</script>

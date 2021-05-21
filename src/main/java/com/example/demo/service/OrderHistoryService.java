@@ -7,21 +7,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 @Service
-public class OrderHistoryService implements IGeneric<OrderHistoryService>{
+public class OrderHistoryService implements IGeneric<OrderHistory>{
     @Autowired
     OrderHistoryRepository orderHistoryRepository;
     @Override
-    public Iterable<OrderHistoryService> findAll() {
+    public Iterable<OrderHistory> findAll() {
         return null;
     }
 
     @Override
-    public OrderHistoryService save(OrderHistoryService orderHistoryService) {
-        return null;
+    public OrderHistory save(OrderHistory orderHistory) {
+        return orderHistoryRepository.save(orderHistory);
     }
 
     @Override
-    public OrderHistoryService findById(Long id) {
+    public OrderHistory findById(Long id) {
         return null;
     }
 
@@ -31,5 +31,8 @@ public class OrderHistoryService implements IGeneric<OrderHistoryService>{
     }
     public Optional<OrderHistory> findOrderHistoryIdByUserIdAndProductId(Long userId, Long productId){
         return orderHistoryRepository.findOrderHistoryByAppUserUserIdAndProductProductId(userId,productId);
+    }
+    public Iterable<OrderHistory> findOrderHistoryByOrderId(Long id){
+        return  orderHistoryRepository.findOrderHistoryByOrdersOrderId(id);
     }
 }

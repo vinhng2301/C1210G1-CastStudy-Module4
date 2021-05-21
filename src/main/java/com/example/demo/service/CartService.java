@@ -15,7 +15,6 @@ import java.util.List;
 public class CartService implements IGeneric<Cart> {
     @Autowired
     CartRepository cartRepository;
-
     @Override
     public Iterable<Cart> findAll() {
         return cartRepository.findAll();
@@ -56,5 +55,8 @@ public class CartService implements IGeneric<Cart> {
             }
         }
         return -1L;
+    }
+    public void deleteAll(Iterable<Cart> list){
+         cartRepository.deleteAll(list);
     }
 }

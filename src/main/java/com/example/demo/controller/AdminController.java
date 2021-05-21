@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Orders;
 import com.example.demo.model.Product;
 import com.example.demo.repository.OrderRepository;
+import com.example.demo.service.OrderService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class AdminController {
     @Autowired
     private UserService userService;
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderService orderService;
 
     @GetMapping("/create-product")
     public ModelAndView showCreateForm() {
@@ -75,10 +76,12 @@ public class AdminController {
         modelAndView.addObject("users", userService.findAll());
         return modelAndView;
     }
+
+    //hien thi thong tin order de quan li
     @GetMapping("/order-manager")
     public ModelAndView showListOrders(@PageableDefault(size = 7) Pageable pageable){
-        Page<Orders> ordersPage = orderRepository.findAll(pageable);
-        ModelAndView modelAndView = new ModelAndView("/admin/ordersManager","orders",ordersPage);
+        Page<Orders> ordersPage = orderService.findAll(pageable);
+        ModelAndView modelAndView = new ModelAndView("admin/ordersManager","orders",ordersPage);
         return modelAndView;
     }
 }

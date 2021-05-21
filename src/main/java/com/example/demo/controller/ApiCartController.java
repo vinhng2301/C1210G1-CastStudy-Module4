@@ -2,13 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.model.*;
 
-import com.example.demo.repository.OrderRepository;
 import com.example.demo.service.*;
-import org.apache.catalina.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -35,6 +35,7 @@ public class ApiCartController {
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
     @PostMapping()
     public ResponseEntity<Cart> addToCart(@RequestBody Cart cart) {
         Long indexOfProductInCart = cartService.checkExist(cart);
@@ -55,7 +56,7 @@ public class ApiCartController {
     }
 
     @GetMapping("/list/{userId}")
-    public ResponseEntity<List<Cart>> showCart(@PathVariable("userId") Long id){
+    public ResponseEntity<List<Cart>> showCart(@PathVariable("userId") Long id) {
         List<Cart> list = (List<Cart>) cartService.getListCartByUserId(id);
         if (list.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -79,16 +80,31 @@ public class ApiCartController {
         cartService.save(cart);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @DeleteMapping("/{numberId}")
-    public ResponseEntity<Cart> delete(@PathVariable("numberId") Long id ){
+    public ResponseEntity<Cart> delete(@PathVariable("numberId") Long id) {
         cartService.delete(id);
-        return  new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PutMapping()
-    public ResponseEntity<List<Cart>> doBuy(@RequestBody Orders order){
+
+    @PostMapping("/buy")
+    public ResponseEntity<List<Cart>> doBuy(@RequestBody Orders order) {
         AppUser user = userService.findById(order.getAppUser().getUserId());
-        order.setAppUser(user);
         orderService.save(order);
+        Iterable<Cart> carts = cartService.getListCartByUserId(user.getUserId());
+        for (Cart cart : (List<Cart>) carts) {
+            OrderHistory orderHistory = new OrderHistory();
+            orderHistory.setProduct(cart.getProduct());
+            orderHistory.setColor(cart.getColor());
+            orderHistory.setSize(cart.getSize());
+            orderHistory.setQuantity(cart.getQuantity());
+            orderHistory.setPrices(cart.getPrices());
+            orderHistory.setAppUser(user);
+            orderHistory.setStatus("wait");
+            orderHistory.setOrders(order);
+            orderHistoryService.save(orderHistory);
+        }
+        cartService.deleteAll(carts);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

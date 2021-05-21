@@ -1365,10 +1365,8 @@ Proceed to Checkout
             },
             data:JSON.stringify(newOrder),
             type:"POST",
-            url:"/api/cart",
+            url:"/api/cart/buy",
             success:alert("Order Sucess"),
-            error: alert("ERROR")
-
         })
     }
 

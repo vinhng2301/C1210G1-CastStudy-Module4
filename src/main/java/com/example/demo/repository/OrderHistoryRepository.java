@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface OrderHistoryRepository extends JpaRepository<OrderHistory, Long> {
     Optional<OrderHistory> findOrderHistoryByAppUserUserIdAndProductProductId(Long userId , Long productId);
+    Iterable<OrderHistory> findOrderHistoryByOrdersOrderId(Long id);
 }

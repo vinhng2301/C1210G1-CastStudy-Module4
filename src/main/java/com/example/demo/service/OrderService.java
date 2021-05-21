@@ -32,6 +32,6 @@ public class OrderService implements IGeneric<Orders> {
 
     @Override
     public void delete(Long id) {
-
+        orderRepository.deleteById(id);
     }
 }

@@ -12,10 +12,62 @@ public class OrderHistory {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-    private String prices;
+    private String color;
+    private String size;
+    private int quantity;
     private Date timeReceived;
     private Date  timeOrder;
     private String status;
+    private String prices;
+    @ManyToOne
+    @JoinColumn(name = "orders_id")
+      private Orders orders;
+
+    public Orders getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Orders orders) {
+        this.orders = orders;
+    }
+
+    public OrderHistory(Long id, Product product, String color, String size, int quantity, Date timeReceived, Date timeOrder, String status, String prices, Orders orders, AppUser appUser) {
+        this.id = id;
+        this.product = product;
+        this.color = color;
+        this.size = size;
+        this.quantity = quantity;
+        this.timeReceived = timeReceived;
+        this.timeOrder = timeOrder;
+        this.status = status;
+        this.prices = prices;
+        this.orders = orders;
+        this.appUser = appUser;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public OrderHistory() {
     }
@@ -63,15 +115,6 @@ public class OrderHistory {
         this.timeOrder = timeOrder;
     }
 
-    public OrderHistory(Long id, Product product, String prices, Date timeReceived, Date timeOrder, String status, AppUser appUser) {
-        this.id = id;
-        this.product = product;
-        this.prices = prices;
-        this.timeReceived = timeReceived;
-        this.timeOrder = timeOrder;
-        this.status = status;
-        this.appUser = appUser;
-    }
 
     public String getStatus() {
         return status;
