@@ -1264,7 +1264,7 @@ $79.65
 </div>
 </div>
 
-<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" onclick="buy()">
 Proceed to Checkout
 </button>
 </div>
@@ -1290,7 +1290,7 @@ Proceed to Checkout
 </td>
 <td class="column-2">${a.size} <span>-</span> ${a.color}</td>
 <td class="column-3" id="p${a.numberId}">${a.product.prices}</td>
-<td class="column-4">
+<td class="column-3">
 <div class="wrap-num-product flex-w m-l-auto m-r-0">
 <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" onclick="minus2(\'' + ${a.numberId} + '\')">
 <i class="fs-16 zmdi zmdi-minus"></i>
@@ -1303,7 +1303,8 @@ Proceed to Checkout
 </div>
 </div>
 </td>
-<td class="column-5" id="total${a.numberId}">${a.prices}</td><span>$</span>
+<td class="column-5" id="total${a.numberId}">${a.prices}</td>
+<td class="column-6" onclick="deleteInCart(\'' + ${a.numberId} + '\')" >X</td>
 </tr>`
     }
 
@@ -1314,7 +1315,7 @@ Proceed to Checkout
         if (quantity >= 1) {
             newQuantity = quantity - 1;
             total = parseInt(document.getElementById(idProduct).innerText) * (parseInt(newQuantity));
-            numberId = a;
+            numberId = a;//number id in cart
             $.ajax({
                 type: "PUT",
                 url: `api/cart/${numberId}/${newQuantity}/${total}`,
@@ -1341,4 +1342,18 @@ Proceed to Checkout
         }
     }
 
+    function buy() {
+
+    }
+
+    function deleteInCart(a) {
+        let numberId = a; //Number id in cart
+        if (confirm("You you want to delete")) {
+            $.ajax({
+                type: "DELETE",
+                url: `api/cart/${numberId}`,
+                success: showCart()
+            })
+        }
+    }
 </script>

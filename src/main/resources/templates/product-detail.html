@@ -361,44 +361,9 @@
                             <div class="row">
                                 <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
                                     <div class="p-b-30 m-lr-15-sm" id="review1">
-<!--                                       ajax xn ly doan nay -->
+                                        <!--                                       ajax xn ly doan nay -->
                                         <!-- Add review -->
-                                        <form class="w-full">
-                                            <h5 class="mtext-108 cl2 p-b-7">
-                                                Add a review
-                                            </h5>
-
-                                            <p class="stext-102 cl6">
-                                                Allowed you write your review , Just only you bought this product
-                                            </p>
-
-                                            <div class="flex-w flex-m p-t-50 p-b-23">
-												<span class="stext-102 cl3 m-r-16">
-													Your Rating
-												</span>
-
-                                                <span class="wrap-rating fs-18 cl11 pointer">
-													<i value="1" class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<i value="2" class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<i value="3" class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<input class="dis-none" type="number" name="rating">
-												</span>
-                                            </div>
-
-                                            <div class="row p-b-25">
-                                                <div class="col-12 p-b-5">
-                                                    <label class="stext-102 cl3" for="review">Your review</label>
-                                                    <textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10"
-                                                              id="review" name="review"></textarea>
-                                                </div>
-                                            </div>
-
-                                            <button onclick="writtenReview()" class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
-                                                Submit
-                                            </button>
-                                        </form>
+                                        <strong>No review</strong>
                                     </div>
                                 </div>
                             </div>
@@ -966,39 +931,47 @@
             type: "GET",
             url: `api/review/${productId}`,
             success: function (data) {
-                console.log(data)
-                 content2=""
-                for (i = 0; i < data.length; i++) {
-                   content2+= printReviews(data[i])
+                if(data==null){
+                    return;
                 }
-                content2+=`  <form class="w-full">
+                console.log(data)
+                console.log(checkBuy())
+                content2 = ""
+                for (i = 0; i < data.length; i++) {
+                    content2 += printReviews(data[i])
+                }
+                if (checkBuy()) {
+                    content2 += `  <form class="w-full">
  <h5 class="mtext-108 cl2 p-b-7">
       Add a review </h5>
  <p class="stext-102 cl6">
-   Allowed you write your review , Just only you bought this product
+viet ten user name vao day
 </p> <div class="flex-w flex-m p-t-50 p-b-23">
 <span class="stext-102 cl3 m-r-16">
 Your Rating
 </span><span class="wrap-rating fs-18 cl11 pointer">
-<i value="1" class="item-rating pointer zmdi zmdi-star-outline"></i>
-<i value="2" class="item-rating pointer zmdi zmdi-star-outline"></i>
-<i value="3" class="item-rating pointer zmdi zmdi-star-outline"></i>
 <i class="item-rating pointer zmdi zmdi-star-outline"></i>
 <i class="item-rating pointer zmdi zmdi-star-outline"></i>
-<input class="dis-none" type="number" name="rating">
+<i class="item-rating pointer zmdi zmdi-star-outline"></i>
+<i class="item-rating pointer zmdi zmdi-star-outline"></i>
+<i class="item-rating pointer zmdi zmdi-star-outline"></i>
+<input class="dis-none" type="number" name="rating" id="start">
 </span> </div><div class="row p-b-25">
 <div class="col-12 p-b-5">
 <label class="stext-102 cl3" for="review">Your review</label>
 <textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10"
-  id="review" name="review"></textarea>
+  id="review-comment" name="review"></textarea>
   </div>
 </div>
 <button onclick="writtenReview()" class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
   Submit
   </button>
   </form>`
-  document.getElementById('review1').outerHTML=content2;
-  },
+                } else {
+                    content2 += `<strong> Allowed you write your review , Just only you bought this product</strong>`
+                }
+                document.getElementById('review1').outerHTML = content2;
+            },
             error: console.log(onerror)
         })
 
@@ -1007,7 +980,7 @@ Your Rating
     function printReviews(a) {
         return ` <div class="flex-w flex-t p-b-68">
   <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
- <img src="images/avatar-01.jpg" alt="AVATAR"></div>
+ <img src="images/thanos.jpg" alt="AVATAR"></div>
 <div class="size-207">
 <div class="flex-w flex-sb-m p-b-17">
 <span class="mtext-107 cl2 p-r-20">
@@ -1029,8 +1002,42 @@ ${a.comment}
 
 </script>
 <script>
-    function writtenReview(){
+    function writtenReview() {
+        let comment = document.getElementById("review-comment").value;
+        let productId = document.getElementById("productId").value;
+        let newReview = {
+            comment: comment,
+            appUser: {
+                userId: 1
+            },
+            product: {
+                productId: productId
+            }
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            url: `http://localhost:8080/api/review`,
+            data: JSON.stringify(newReview),
+            success: seeReview(),
+            error: console.log(onerror)
+        })
+    }
 
+    function checkBuy() {
+        let userId = 1;
+        let productId = document.getElementById("productId").value;
+       return    $.ajax({
+            type: "GET",
+            url: `api/review/${userId}/${productId}`,
+            success: function (data) {
+                console.log(data)
+                return data
+            }
+        })
     }
 </script>
 <!--===============================================================================================-->

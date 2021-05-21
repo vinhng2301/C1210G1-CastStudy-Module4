@@ -61,12 +61,12 @@ public class ApiCartController {
         }
     }
 
-    @DeleteMapping("/product")
-    public ResponseEntity<Cart> deleteProduct(@RequestBody Cart cart) {
-        Long indexThisProduct = cartService.checkExist(cart);
-        cartService.delete(indexThisProduct);
-        return new ResponseEntity(HttpStatus.OK);
-    }
+//    @DeleteMapping("/product")
+//    public ResponseEntity<Cart> deleteProduct(@RequestBody Cart cart) {
+//        Long indexThisProduct = cartService.checkExist(cart);
+//        cartService.delete(indexThisProduct);
+//        return new ResponseEntity(HttpStatus.OK);
+//    }
 
     @PutMapping("{numberId}/{quantity}/{prices}")
     public ResponseEntity<Cart> updataCart(@PathVariable("numberId") Long id, @PathVariable("quantity") int quantity, @PathVariable("prices") String prices) {
@@ -76,6 +76,10 @@ public class ApiCartController {
         cartService.save(cart);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    @DeleteMapping("/{numberId}")
+    public ResponseEntity<Cart> delete(@PathVariable("numberId") Long id ){
+        cartService.delete(id);
+        return  new ResponseEntity<>(HttpStatus.OK);
+    }
 }
 
