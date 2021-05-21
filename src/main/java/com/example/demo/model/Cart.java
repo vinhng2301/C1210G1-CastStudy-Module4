@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,10 +10,11 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long numberId;
-    @OneToOne
+
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     private AppUser appUser;
-    @OneToOne
+    @ManyToOne()
     @JoinColumn(name = "product_id")
     private Product product;
     private int quantity;

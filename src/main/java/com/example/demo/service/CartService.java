@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.AppUser;
 import com.example.demo.model.Cart;
 import com.example.demo.repository.CartRepository;
 import org.apache.catalina.LifecycleState;
@@ -46,7 +47,7 @@ public class CartService implements IGeneric<Cart> {
     }
 
     public Long checkExist(Cart cart) {
-        List<Cart> list = (List<Cart>) findAll();
+        List<Cart> list = (List<Cart>) getListCartByUserId(cart.getAppUser().getUserId());
         for (Cart cart1 : list) {
             if (cart1.getProduct().getProductId().equals(cart.getProduct().getProductId())) {
                 if (cart1.getSize().equals(cart.getSize()) && cart1.getColor().equals(cart.getColor())) {
