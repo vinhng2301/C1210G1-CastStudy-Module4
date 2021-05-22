@@ -17,7 +17,7 @@ public class OrderService implements IGeneric<Orders> {
 
     @Override
     public Iterable<Orders> findAll() {
-        return null;
+        return orderRepository.findAll();
     }
 
     @Override
@@ -33,5 +33,11 @@ public class OrderService implements IGeneric<Orders> {
     @Override
     public void delete(Long id) {
         orderRepository.deleteById(id);
+    }
+    public Iterable<Orders> searchOrderByKey(String key,String key2){
+        return orderRepository.findAllByAppUserNameContainingOrAppUser_PhoneContaining(key,key2);
+    }
+    public Iterable<Orders> findAllByStatus(String status){
+        return orderRepository.findAllByStatus(status);
     }
 }

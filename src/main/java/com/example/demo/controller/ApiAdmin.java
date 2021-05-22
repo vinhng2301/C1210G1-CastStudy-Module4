@@ -25,8 +25,8 @@ public class ApiAdmin {
 
     //Dung de in ra order
     @GetMapping("/orders")
-    public ResponseEntity<Iterable<Orders>> getAllOrders(){
-        return  new ResponseEntity<>(orderService.findAll(),HttpStatus.OK);
+    public ResponseEntity<Iterable<Orders>> getAllOrders() {
+        return new ResponseEntity<>(orderService.findAll(), HttpStatus.OK);
     }
 
     //update trạng thái đơn hàng (giao/chưa giao....)
@@ -43,10 +43,23 @@ public class ApiAdmin {
         }
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
+
     //xoa san khoi muc quan li sau khi nhan hang xong
     @DeleteMapping("/{orderId}")
-    public ResponseEntity<Iterable<Orders>> deleteOrdersWhenDone(@PathVariable("orderId") Long id){
+    public ResponseEntity<Iterable<Orders>> deleteOrdersWhenDone(@PathVariable("orderId") Long id) {
         orderService.delete(id);
-        return  new ResponseEntity<>(orderService.findAll(),HttpStatus.OK);
+        return new ResponseEntity<>(orderService.findAll(), HttpStatus.OK);
+    }
+
+    //lọc order bằng status
+    @GetMapping("status/{status}")
+    public ResponseEntity<Iterable<Orders>> findByStatus(@PathVariable("status") String status) {
+        return new ResponseEntity<>(orderService.findAllByStatus(status), HttpStatus.OK);
+    }
+
+    //search product by name
+    @GetMapping("key/{key}")
+    public ResponseEntity<Iterable<Orders>> searchByKey(@PathVariable("key") String key) {
+        return new ResponseEntity<>(orderService.searchOrderByKey(key,key), HttpStatus.OK);
     }
 }

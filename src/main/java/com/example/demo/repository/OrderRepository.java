@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrderRepository extends PagingAndSortingRepository<Orders,Long> {
-
+    Iterable<Orders> findAllByStatus(String status);
+    Iterable<Orders> findAllByAppUserNameContainingOrAppUser_PhoneContaining(String key,String key2);
 }

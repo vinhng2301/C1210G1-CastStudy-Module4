@@ -15,13 +15,16 @@
 
 <div class="container">
     <div class="row g-0">
-        <div class="col-sm-6 col-md-8"><a href="">User Manager</a></div>
-        <div class="col-6 col-md-4">
+        <div class="col-sm-6 col-md-8"><a href="" style="text-decoration: none">User Manager</a></div>
+        <div class="col-sm-6 col-md-8">
+            <input type="" id="key-search" placeholder="tìm kiếm ở đây nè" oninput="searchOrderByKey()">
 
+            <input type="radio" onclick="findWait()" value="wait" name="search">wait
+            <input type="radio" onclick="findShipping()" name="search" value="shipping">shipping
         </div>
     </div>
     <div>
-        <table class="table table-striped table-hover">
+        <table class="table table-striped table-hover" id="rePrint">
             <tr>
                 <th>#number</th>
                 <th>account</th>
@@ -30,7 +33,7 @@
                 <th>status</th>
                 <th>view</th>
             </tr>
-            <tr th:each="order:${orders}" id="rePrint">
+            <tr th:each="order:${orders}">
                 <td th:utext="${order.getOrderId()}"></td>
                 <td th:utext="${order.getAppUser().getName()}"></td>
                 <td th:utext="${order.getOrderDate()}"></td>
@@ -41,7 +44,8 @@
                     <option value="done">-done-</option>
                 </select>
                 </td>
-                <td><a style="text-decoration: none" href="#" th:onclick="|seeThisOrdersDetail('${order.getOrderId()}')|">View</a></td>
+                <td><a style="text-decoration: none" href="#"
+                       th:onclick="|seeThisOrdersDetail('${order.getOrderId()}')|">View</a></td>
             </tr>
         </table>
     </div>
@@ -65,7 +69,6 @@
                 url: `/api/admin/${id}/${status}`,
                 success: function (data) {
                     let content = "";
-                    console.log(data)
                     if (data.status == "shipping") {
                         content += `
                     <option value="shipping">-shipping-</option>
@@ -82,28 +85,119 @@
 
     // xoa san pham nay khi o trang thai 'done'
     function deleteOneOrder(id) {
+        console.log(id)
         $.ajax({
             type: "DELETE",
             url: `api/admin/${id}`,
             success(data) {
+                console.log(data)
                 alert("Delivery successful");
-                for(i=0;i<data.lenght;i++){
-                    window.rePrint(data[i])
-                };
+                let content1 = `  <tr>
+                <th>#number</th>
+                <th>account</th>
+                <th>date-order</th>
+                <th>$total</th>
+                <th>status</th>
+                <th>view</th>
+            </tr>`
+                let content2 = ""
+                for (i = 0; i < data.length; i++) {
+                    content2 += rePrint(data[i]);
+                }
+                let content = content1 + content2;
+                document.getElementById("rePrint").innerHTML = content;
+                console.log(document.getElementById("rePrint").innerHTML)
             }
         })
     }
-    function rePrint(a){
-               let content=`<td></td>
+
+    function rePrint(a) {
+        if (a.status == 'shipping') {
+            return `<tr>
+<td>${a.orderId}</td>
                 <td>${a.appUser.name}</td>
                 <td>${a.orderDate}</td>
                 <td>${a.total}</td>
-                <td><select name="" th:id="${a.orderId}" onchange="|changeStatus('${a.orderId}')|">
-                    <option value="wait" th:if="${a.status}=='wait'">-wait-</option>
+                <td><select name="" id="${a.orderId}" onchange="changeStatus(\'' + ${a.orderId} + '\')">
+
                     <option value="shipping">-shipping-</option>
                     <option value="done">-done-</option>
                 </select>
                 </td>
-                <td><a style="text-decoration: none" href="#" th:onclick="|seeThisOrdersDetail('${a.orderId}')|">View</a></td>`
+                <td><a style="text-decoration: none" href="#" onclick="seeThisOrdersDetail(\''+${a.orderId}+'\+)">View</a></td>
+</tr>`
+        }
+        return `<tr>
+<td>${a.orderId}</td>
+                <td>${a.appUser.name}</td>
+                <td>${a.orderDate}</td>
+                <td>${a.total}</td>
+                <td><select name="" id="${a.orderId}" onchange="changeStatus(\'' + ${a.orderId} + '\')">
+                    <option value="wait">-wait-</option>
+                    <option value="shipping">-shipping-</option>
+                    <option value="done">-done-</option>
+                </select>
+                </td>
+                <td><a style="text-decoration: none" href="#" onclick="seeThisOrdersDetail(\''+${a.orderId}+'\+)">View</a></td>
+</tr>`
+    }
+
+
+    function findWait() {
+        doSortOrderByStatus("wait")
+    }
+
+    function findShipping() {
+        doSortOrderByStatus("shipping")
+    }
+
+
+    function doSortOrderByStatus(value) {
+        $.ajax({
+            type: "GET",
+            url: `api/admin/status/${value}`,
+            success: function (data) {
+                let content1 = `  <tr>
+                <th>#number</th>
+                <th>account</th>
+                <th>date-order</th>
+                <th>$total</th>
+                <th>status</th>
+                <th>view</th>
+            </tr>`
+                let content2 = ""
+                for (i = 0; i < data.length; i++) {
+                    content2 += rePrint(data[i]);
+                }
+                let content = content1 + content2;
+                document.getElementById("rePrint").innerHTML = content;
+                console.log(document.getElementById("rePrint").innerHTML)
+            }
+        })
+    }
+
+    function searchOrderByKey() {
+        let value = document.getElementById('key-search').value;
+        $.ajax({
+            type: "GET",
+            url: `api/admin/key/${value}`,
+            success: function (data) {
+                let content1 = `  <tr>
+                <th>#number</th>
+                <th>account</th>
+                <th>date-order</th>
+                <th>$total</th>
+                <th>status</th>
+                <th>view</th>
+            </tr>`
+                let content2 = ""
+                for (i = 0; i < data.length; i++) {
+                    content2 += rePrint(data[i]);
+                }
+                let content = content1 + content2;
+                document.getElementById("rePrint").innerHTML = content;
+                console.log(document.getElementById("rePrint").innerHTML)
+            }
+        })
     }
 </script>
