@@ -32,4 +32,7 @@ public class ProductService implements IGeneric<Product> {
     public Iterable<Product> listProductFindByName(String name){
         return productRepository.findProductByProductNameContaining(name);
     }
+    public Iterable<Product> findProductByCategory(String key){
+        return productRepository.findProductByCategory(key);
+    }
 }

@@ -38,7 +38,206 @@
 <body class="animsition">
 
 <!-- Header -->
-<header th:replace="/index :: header"></header>
+<header th:fragment="header">
+    <!-- Header desktop -->
+    <div class="container-menu-desktop">
+        <!-- Topbar -->
+        <div class="top-bar">
+            <div class="content-topbar flex-sb-m h-full container">
+                <div class="left-top-bar">
+                    Free shipping for standard order over $100
+                </div>
+
+                <div class="right-top-bar flex-w h-full">
+                    <a href="#" class="flex-c-m trans-04 p-lr-25">
+                        Help & FAQs
+                    </a>
+
+                    <a href="/api/auth/login" class="flex-c-m trans-04 p-lr-25">
+                        My Account
+                    </a>
+
+
+                    <a href="#" class="flex-c-m trans-04 p-lr-25">
+                        <span th:utext="${session.get('user').username}"></span>
+                    </a>
+                    <a href="#" class="flex-c-m trans-04 p-lr-25">
+                        <input id="userId" th:value="${session.get('user').userId}" hidden>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrap-menu-desktop">
+            <nav class="limiter-menu-desktop container">
+
+                <!-- Logo desktop -->
+                <a href="#" class="logo">
+                    <img src="images/icons/logo-01.png" alt="IMG-LOGO">
+                </a>
+
+                <!-- Menu desktop -->
+                <div class="menu-desktop">
+                    <ul class="main-menu">
+                        <li class="active-menu">
+                            <a th:href="@{/home}">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="/product.html">Shop</a>
+                        </li>
+
+                        <li class="label1" data-label1="hot">
+                            <a href="shoping-cart.html">Features</a>
+                        </li>
+
+                        <li>
+                            <a href="/blog.html">Blog</a>
+                        </li>
+
+                        <li>
+                            <a href="about.html">About</a>
+                        </li>
+
+                        <li>
+                            <a href="contact.html">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Icon header -->
+                <div class="wrap-icon-header flex-w flex-r-m">
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
+                        <i class="zmdi zmdi-search"></i>
+                    </div>
+
+                    <div onclick="showCart()"
+                         class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
+                         data-notify="2">
+                        <i class="zmdi zmdi-shopping-cart"></i>
+                    </div>
+
+                    <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
+                       data-notify="0">
+                        <i class="zmdi zmdi-favorite-outline"></i>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Header Mobile -->
+    <div class="wrap-header-mobile">
+        <!-- Logo moblie -->
+        <div class="logo-mobile">
+            <a href="index.html"><img src="images/icons/logo-01.png" alt="IMG-LOGO"></a>
+        </div>
+
+        <!-- Icon header -->
+        <div class="wrap-icon-header flex-w flex-r-m m-r-15">
+            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
+                <i class="zmdi zmdi-search"></i>
+            </div>
+
+            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
+                 data-notify="2">
+                <i class="zmdi zmdi-shopping-cart"></i>
+            </div>
+
+            <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti"
+               data-notify="0">
+                <i class="zmdi zmdi-favorite-outline"></i>
+            </a>
+        </div>
+
+        <!-- Button show menu -->
+        <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+        </div>
+    </div>
+
+
+    <!-- Menu Mobile -->
+    <div class="menu-mobile">
+        <ul class="topbar-mobile">
+            <li>
+                <div class="left-top-bar">
+                    Free shipping for standard order over $100
+                </div>
+            </li>
+
+            <li>
+                <div class="right-top-bar flex-w h-full">
+                    <a href="#" class="flex-c-m p-lr-10 trans-04">
+                        Help & FAQs
+                    </a>
+
+                    <a href="" class="flex-c-m p-lr-10 trans-04">
+                        My Account
+                    </a>
+
+                    <a href="#" class="flex-c-m p-lr-10 trans-04">
+                        EN
+                    </a>
+
+                    <a href="#" class="flex-c-m p-lr-10 trans-04">
+                        USD
+                    </a>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="main-menu-m">
+            <li>
+                <a href="index.html">Home</a>
+                <ul class="sub-menu-m">
+                    <li><a href="index.html">Homepage</a></li>
+                </ul>
+                <span class="arrow-main-menu-m">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+					</span>
+            </li>
+
+            <li>
+                <a href="product.html">Shop</a>
+            </li>
+
+            <li>
+                <a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
+            </li>
+
+            <li>
+                <a href="blog.html">Blog</a>
+            </li>
+
+            <li>
+                <a href="about.html">About</a>
+            </li>
+
+            <li>
+                <a href="contact.html">Contact</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Modal Search -->
+    <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+        <div class="container-search-header">
+            <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
+                <img src="images/icons/icon-close2.png" alt="CLOSE">
+            </button>
+
+            <form class="wrap-search-header flex-w p-l-15">
+                <button class="flex-c-m trans-04">
+                    <i class="zmdi zmdi-search"></i>
+                </button>
+                <input class="plh3" type="text" name="search" placeholder="Search...">
+            </form>
+        </div>
+    </div>
+</header>
 
 <!-- Cart -->
 <!--<div th:fragment="cart" class="wrap-header-cart js-panel-cart">-->
@@ -115,255 +314,261 @@
 
 
 <!-- Product Detail -->
-<form action="">
-    <section class="sec-product-detail bg0 p-t-65 p-b-60">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-lg-7 p-b-30">
-                    <div class="p-l-25 p-r-30 p-lr-0-lg">
-                        <div class="wrap-slick3 flex-sb flex-w">
-                            <div class="wrap-slick3-dots"></div>
-                            <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+<div id="inner-cart-when-click">
+    <form action="">
+        <section class="sec-product-detail bg0 p-t-65 p-b-60">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-lg-7 p-b-30">
+                        <div class="p-l-25 p-r-30 p-lr-0-lg">
+                            <div class="wrap-slick3 flex-sb flex-w">
+                                <div class="wrap-slick3-dots"></div>
+                                <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
-                            <div class="slick3 gallery-lb">
-                                <div class="item-slick3" th:data-thumb="${productDetail.getImg()}">
-                                    <div class="wrap-pic-w pos-relative">
-                                        <img th:src="${productDetail.getImg()}" alt="IMG-PRODUCT">
+                                <div class="slick3 gallery-lb">
+                                    <div class="item-slick3" th:data-thumb="${productDetail.getImg()}">
+                                        <div class="wrap-pic-w pos-relative">
+                                            <img th:src="${productDetail.getImg()}" alt="IMG-PRODUCT">
 
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                           href="images/product-detail-01.jpg">
-                                            <i class="fa fa-expand"></i>
-                                        </a>
+                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
+                                               href="images/product-detail-01.jpg">
+                                                <i class="fa fa-expand"></i>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="item-slick3" th:data-thumb="${productDetail.getImg()}">
-                                    <div class="wrap-pic-w pos-relative">
-                                        <img th:src="${productDetail.getImg()}" alt="IMG-PRODUCT">
+                                    <div class="item-slick3" th:data-thumb="${productDetail.getImg()}">
+                                        <div class="wrap-pic-w pos-relative">
+                                            <img th:src="${productDetail.getImg()}" alt="IMG-PRODUCT">
 
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                           href="images/product-detail-02.jpg">
-                                            <i class="fa fa-expand"></i>
-                                        </a>
+                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
+                                               href="images/product-detail-02.jpg">
+                                                <i class="fa fa-expand"></i>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="item-slick3" th:data-thumb="${productDetail.getImg()}">
-                                    <div class="wrap-pic-w pos-relative">
-                                        <img th:src="${productDetail.getImg()}" alt="IMG-PRODUCT">
+                                    <div class="item-slick3" th:data-thumb="${productDetail.getImg()}">
+                                        <div class="wrap-pic-w pos-relative">
+                                            <img th:src="${productDetail.getImg()}" alt="IMG-PRODUCT">
 
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                           href="images/product-detail-03.jpg">
-                                            <i class="fa fa-expand"></i>
-                                        </a>
+                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
+                                               href="images/product-detail-03.jpg">
+                                                <i class="fa fa-expand"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-6 col-lg-5 p-b-30">
-                    <div class="p-r-50 p-t-5 p-lr-0-lg">
-                        <h4 class="mtext-105 cl2 js-name-detail p-b-14" th:utext="${productDetail.getProductName()}">
-                        </h4>
+                    <div class="col-md-6 col-lg-5 p-b-30">
+                        <div class="p-r-50 p-t-5 p-lr-0-lg">
+                            <h4 class="mtext-105 cl2 js-name-detail p-b-14"
+                                th:utext="${productDetail.getProductName()}">
+                            </h4>
 
-                        <span id="prices-change" class="mtext-106 cl2" th:utext="${productDetail.getPrices()} +'$'">
+                            <span id="prices-change" class="mtext-106 cl2" th:utext="${productDetail.getPrices()} +'$'">
 						</span>
-                        <input id="product-prices" type="text" th:value="${productDetail.getPrices()}"
-                               hidden>
-                        <input id="productId" th:value="${productDetail.getProductId()}"
-                               hidden>
-                        <p class="stext-102 cl3 p-t-23" th:utext="${productDetail.getDescription()}">
+                            <input id="product-prices" type="text" th:value="${productDetail.getPrices()}"
+                                   hidden>
+                            <input id="productId" th:value="${productDetail.getProductId()}"
+                                   hidden>
+                            <p class="stext-102 cl3 p-t-23" th:utext="${productDetail.getDescription()}">
 
-                        </p>
+                            </p>
 
-                        <!--  -->
-                        <div class="p-t-33">
-                            <div class="flex-w flex-r-m p-b-10">
-                                <div class="size-203 flex-c-m respon6">
-                                    Size
-                                </div>
-
-                                <div class="size-204 respon6-next">
-                                    <div class="rs1-select2 bor8 bg0">
-                                        <select class="js-select2" id="selectSize" th:name="size"
-                                                onchange="checkColor(document.getElementById('selectSize').value)">
-                                            <option>Choose an option</option>
-                                            <option th:each="size :${sizeExistInWareHouse}" th:value="${size}"
-                                                    th:utext="${size}"></option>
-                                        </select>
-                                        <div class="dropDownSelect2"></div>
+                            <!--  -->
+                            <div class="p-t-33">
+                                <div class="flex-w flex-r-m p-b-10">
+                                    <div class="size-203 flex-c-m respon6">
+                                        Size
                                     </div>
-                                </div>
-                            </div>
 
-
-                            <div class="flex-w flex-r-m p-b-10">
-                                <div class="size-203 flex-c-m respon6">
-                                    Color
-                                </div>
-
-                                <div class="size-204 respon6-next">
-                                    <div class="rs1-select2 bor8 bg0">
-                                        <select class="js-select2" name="color" id="select-option-color">
-                                            <option>Please choose size first ^ ^</option>
-                                        </select>
-                                        <div class="dropDownSelect2"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="flex-w flex-r-m p-b-10">
-                                <div class="size-204 flex-w flex-m respon6-next">
-                                    <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                        <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
-                                             onclick="minus()">
-                                            <i class="fs-16 zmdi zmdi-minus"></i>
-                                        </div>
-
-                                        <input class="mtext-104 cl3 txt-center num-product" type="number" id="quantity"
-                                               name="num-product" value="1">
-
-                                        <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" onclick="plus()">
-                                            <i class="fs-16 zmdi zmdi-plus"></i>
+                                    <div class="size-204 respon6-next">
+                                        <div class="rs1-select2 bor8 bg0">
+                                            <select class="js-select2" id="selectSize" th:name="size"
+                                                    onchange="checkColor(document.getElementById('selectSize').value)">
+                                                <option>Choose an option</option>
+                                                <option th:each="size :${sizeExistInWareHouse}" th:value="${size}"
+                                                        th:utext="${size}"></option>
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <button onclick="addToCart()"
-                                            class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                                        Add to cart
-                                    </button>
+
+                                <div class="flex-w flex-r-m p-b-10">
+                                    <div class="size-203 flex-c-m respon6">
+                                        Color
+                                    </div>
+
+                                    <div class="size-204 respon6-next">
+                                        <div class="rs1-select2 bor8 bg0">
+                                            <select class="js-select2" name="color" id="select-option-color">
+                                                <option>Please choose size first ^ ^</option>
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex-w flex-r-m p-b-10">
+                                    <div class="size-204 flex-w flex-m respon6-next">
+                                        <div class="wrap-num-product flex-w m-r-20 m-tb-10">
+                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
+                                                 onclick="minus()">
+                                                <i class="fs-16 zmdi zmdi-minus"></i>
+                                            </div>
+
+                                            <input class="mtext-104 cl3 txt-center num-product" type="number"
+                                                   id="quantity"
+                                                   name="num-product" value="1">
+
+                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
+                                                 onclick="plus()">
+                                                <i class="fs-16 zmdi zmdi-plus"></i>
+                                            </div>
+                                        </div>
+
+                                        <button onclick="addToCart()"
+                                                class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                                            Add to cart
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!--  -->
-                        <div class="flex-w flex-m p-l-100 p-t-40 respon7">
-                            <div class="flex-m bor9 p-r-10 m-r-11">
-                                <a href="#"
-                                   class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
-                                   data-tooltip="Add to Wishlist">
-                                    <i class="zmdi zmdi-favorite"></i>
+                            <!--  -->
+                            <div class="flex-w flex-m p-l-100 p-t-40 respon7">
+                                <div class="flex-m bor9 p-r-10 m-r-11">
+                                    <a href="#"
+                                       class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
+                                       data-tooltip="Add to Wishlist">
+                                        <i class="zmdi zmdi-favorite"></i>
+                                    </a>
+                                </div>
+
+                                <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+                                   data-tooltip="Facebook">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+
+                                <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+                                   data-tooltip="Twitter">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+
+                                <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+                                   data-tooltip="Google Plus">
+                                    <i class="fa fa-google-plus"></i>
                                 </a>
                             </div>
-
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                               data-tooltip="Facebook">
-                                <i class="fa fa-facebook"></i>
-                            </a>
-
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                               data-tooltip="Twitter">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                               data-tooltip="Google Plus">
-                                <i class="fa fa-google-plus"></i>
-                            </a>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="bor10 m-t-50 p-t-43 p-b-40">
-                <!-- Tab01 -->
-                <div class="tab01">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item p-b-10">
-                            <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a>
-                        </li>
+                <div class="bor10 m-t-50 p-t-43 p-b-40">
+                    <!-- Tab01 -->
+                    <div class="tab01">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item p-b-10">
+                                <a class="nav-link active" data-toggle="tab" href="#description"
+                                   role="tab">Description</a>
+                            </li>
 
-                        <li class="nav-item p-b-10">
-                            <a class="nav-link" data-toggle="tab" href="#information" role="tab">Additional
-                                information</a>
-                        </li>
+                            <li class="nav-item p-b-10">
+                                <a class="nav-link" data-toggle="tab" href="#information" role="tab">Additional
+                                    information</a>
+                            </li>
 
-                        <li class="nav-item p-b-10" onclick="seeReview()">
-                            <a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a>
-                        </li>
-                    </ul>
+                            <li class="nav-item p-b-10" onclick="seeReview()">
+                                <a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a>
+                            </li>
+                        </ul>
 
-                    <!-- Tab panes -->
-                    <div class="tab-content p-t-43">
-                        <!-- - -->
-                        <div class="tab-pane fade show active" id="description" role="tabpanel">
-                            <div class="how-pos2 p-lr-15-md">
-                                <p class="stext-102 cl6">
-                                    Viết nội dung mô tả sơ qua về sản phẩm dô đây :v
-                                </p>
+                        <!-- Tab panes -->
+                        <div class="tab-content p-t-43">
+                            <!-- - -->
+                            <div class="tab-pane fade show active" id="description" role="tabpanel">
+                                <div class="how-pos2 p-lr-15-md">
+                                    <p class="stext-102 cl6">
+                                        Viết nội dung mô tả sơ qua về sản phẩm dô đây :v
+                                    </p>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- - -->
-                        <div class="tab-pane fade" id="information" role="tabpanel">
-                            <div class="row">
-                                <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-                                    <ul class="p-lr-28 p-lr-15-sm">
-                                        <li class="flex-w flex-t p-b-7">
+                            <!-- - -->
+                            <div class="tab-pane fade" id="information" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+                                        <ul class="p-lr-28 p-lr-15-sm">
+                                            <li class="flex-w flex-t p-b-7">
 											<span class="stext-102 cl3 size-205">
 												Weight
 											</span>
 
-                                            <span class="stext-102 cl6 size-206">
+                                                <span class="stext-102 cl6 size-206">
 												0.79 kg
 											</span>
-                                        </li>
+                                            </li>
 
-                                        <li class="flex-w flex-t p-b-7">
+                                            <li class="flex-w flex-t p-b-7">
 											<span class="stext-102 cl3 size-205">
 												Dimensions
 											</span>
 
-                                            <span class="stext-102 cl6 size-206">
+                                                <span class="stext-102 cl6 size-206">
 												110 x 33 x 100 cm
 											</span>
-                                        </li>
+                                            </li>
 
-                                        <li class="flex-w flex-t p-b-7">
+                                            <li class="flex-w flex-t p-b-7">
 											<span class="stext-102 cl3 size-205">
 												Materials
 											</span>
 
-                                            <span class="stext-102 cl6 size-206">
+                                                <span class="stext-102 cl6 size-206">
 												60% cotton
 											</span>
-                                        </li>
+                                            </li>
 
-                                        <li class="flex-w flex-t p-b-7">
+                                            <li class="flex-w flex-t p-b-7">
 											<span class="stext-102 cl3 size-205">
 												Color
 											</span>
 
-                                            <span class="stext-102 cl6 size-206">
+                                                <span class="stext-102 cl6 size-206">
 												Black, Blue, Grey, Green, Red, White
 											</span>
-                                        </li>
+                                            </li>
 
-                                        <li class="flex-w flex-t p-b-7">
+                                            <li class="flex-w flex-t p-b-7">
 											<span class="stext-102 cl3 size-205">
 												Size
 											</span>
 
-                                            <span class="stext-102 cl6 size-206">
+                                                <span class="stext-102 cl6 size-206">
 												XL, L, M, S
 											</span>
-                                        </li>
-                                    </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- - -->
-                        <div class="tab-pane fade" id="reviews" role="tabpanel">
-                            <div class="row">
-                                <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-                                    <div class="p-b-30 m-lr-15-sm" id="review1">
-                                        <!--                                       ajax xn ly doan nay -->
-                                        <!-- Add review -->
-                                        <strong>No review</strong>
+                            <!-- - -->
+                            <div class="tab-pane fade" id="reviews" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+                                        <div class="p-b-30 m-lr-15-sm" id="review1">
+                                            <!--                                       ajax xn ly doan nay -->
+                                            <!-- Add review -->
+                                            <strong>No review</strong>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -371,19 +576,19 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
+            <div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
 			<span class="stext-107 cl6 p-lr-25">
 				SKU: JAK-01
 			</span>
 
-            <span class="stext-107 cl6 p-lr-25" th:utext="${productDetail.getCategory()}">
+                <span class="stext-107 cl6 p-lr-25" th:utext="${productDetail.getCategory()}">
 			</span>
-        </div>
-    </section>
+            </div>
+        </section>
 
-</form>
+    </form>
+</div>
 <!-- Related Products -->
 <section class="sec-relate-product bg0 p-t-45 p-b-105">
     <div class="container">
@@ -871,35 +1076,40 @@
 
 
     function addToCart() {
-        let pId = $('#productId').val()
-        let ql = $('#quantity').val()
-        let prs = parseInt($('#product-prices').val()) * (parseInt(ql))
         let sz = $('#selectSize').val()
-        let c = $('#select-option-color').val()
-        let productInCart = {
-            quantity: ql,
-            prices: prs,
-            size: sz,
-            color: c,
-            product: {
-                productId: pId
-            },
-            appUser: {
-                userId: 1
+        if (sz.length <= 2) {
+            let userId = $('#userId').val()
+            let pId = $('#productId').val()
+            let ql = $('#quantity').val()
+            let prs = parseInt($('#product-prices').val()) * (parseInt(ql))
+            let c = $('#select-option-color').val()
+            let productInCart = {
+                quantity: ql,
+                prices: prs,
+                size: sz,
+                color: c,
+                product: {
+                    productId: pId
+                },
+                appUser: {
+                    userId: userId
+                }
             }
-        }
-        $.ajax({
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            type: "POST",
-            data: JSON.stringify(productInCart),
-            url: "http://localhost:8080/api/cart",
-            success: console.log("success"),
-            error: console.log("err")
-        })
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                data: JSON.stringify(productInCart),
+                url: "http://localhost:8080/api/cart",
+                success: console.log("success"),
+                error: console.log("err")
+            })
 
+        } else {
+            alert("please choose size first")
+        }
     }
 
     // <span id="prices-change" className="mtext-106 cl2" th:utext="${productDetail.getPrices()} +'$'">
@@ -1027,15 +1237,15 @@ ${a.comment}
     }
 
     function checkBuy() {
-        let userId = 1;
-        let data2 =false;
+        let userId = $('userId').val();
+        let data2 = false;
         let productId = document.getElementById("productId").value;
         $.ajax({
             type: "GET",
-            async:false,
+            async: false,
             url: `api/review/${userId}/${productId}`,
             success: function (data) {
-                data2=data
+                data2 = data
             }
         })
         return data2;
@@ -1149,3 +1359,238 @@ ${a.comment}
 
 </body>
 </html>
+<script>
+    function showCart() {
+        let userId = $('#userId').val()
+        $.ajax({
+            type: "GET",
+            url: `/api/cart/list/${userId}`,
+            success: function (data) {
+                let content = `<form class="bg0 p-t-75 p-b-85">
+<div class="container">
+<div class="row">
+<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+<div class="m-l-25 m-r--38 m-lr-0-xl">
+<div class="wrap-table-shopping-cart">
+<table class="table-shopping-cart">
+<tr class="table_head">
+<th class="column-1">Product</th>
+<th class="column-2">Size/Color</th>
+<th class="column-3">Price</th>
+<th class="column-4">Quantity</th>
+<th class="column-5">Total</th>
+</tr>`
+
+                totalPay = 0;
+                for (let i = 0; i < data.length; i++) {
+                    //  totalPay += parseInt(data[i].prices)
+                    // console.log(totalPay)
+                    content += addData(data[i])
+                }
+
+                userName = data[0].appUser.name
+                phone = data[0].appUser.phone
+                content += `</table>
+</div>
+
+<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+<div class="flex-w flex-m m-r-20 m-tb-5">
+<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
+
+<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+Apply coupon
+</div>
+</div>
+
+<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+Update Cart
+</div>
+</div>
+</div>
+</div>
+
+<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+<h4 class="mtext-109 cl2 p-b-30">
+Cart Totals
+</h4>
+
+<div class="flex-w flex-t bor12 p-b-13">
+<div class="size-208">
+<span class="stext-110 cl2">
+Subtotal:
+</span>
+</div>
+
+<div class="size-209">
+<span class="mtext-110 cl2" id="total-to-pay">${totalPay}
+</span>
+</div>
+</div>
+
+<div class="flex-w flex-t bor12 p-t-15 p-b-30">
+<div class="size-208 w-full-ssm">
+<span class="stext-110 cl2">
+Shipping:
+</span>
+</div>
+
+<div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
+<p class="stext-111 cl6 p-t-2">
+You can use default information  or change it in form below
+</p>
+
+<div class="p-t-15">
+<span class="stext-112 cl8">
+Please complete all information
+</span>
+<div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
+</div>
+
+<div class="bor8 bg0 m-b-12">
+<input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="state" id="receiver" value="${userName}"  placeholder="receive">
+</div>
+<div class="bor8 bg0 m-b-12">
+<input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" id="address" name="state" placeholder="State/Country">
+</div>
+
+<div class="bor8 bg0 m-b-22">
+<input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" id="phone" name="postcode" placeholder="phone" value="${phone}">
+</div>
+
+<div class="flex-w">
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="flex-w flex-t p-t-27 p-b-33">
+<div class="size-208">
+<span class="mtext-101 cl2">
+Total:
+</span>
+</div>
+
+<div class="size-209 p-t-1">
+<span class="mtext-110 cl2">
+${totalPay}$
+</span>
+</div>
+</div>
+
+<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" onclick="buy()">
+Proceed to Checkout
+</button>
+</div>
+</div>
+</div>
+</div>
+</form>
+`
+                document.getElementById('inner-cart-when-click').innerHTML = content;
+                document.getElementById('big-banner').innerHTML = " ";
+                document.getElementById('big-slider').innerHTML = " ";
+            },
+            error: console.log("not success")
+        })
+    }
+
+    function addData(a) {
+        totalPay += parseInt(a.prices)
+        return `<tr class="table_row" >
+<td class="column-1">
+<div class="how-itemcart1">
+<span>${a.product.productName}
+</div>
+</td>
+<td class="column-2">${a.size} <span>-</span> ${a.color}</td>
+<td class="column-3" id="p${a.numberId}">${a.product.prices}</td>
+<td class="column-3">
+<div class="wrap-num-product flex-w m-l-auto m-r-0">
+<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" onclick="minus2(\'' + ${a.numberId} + '\')">
+<i class="fs-16 zmdi zmdi-minus"></i>
+</div>
+
+<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1"  value='${a.quantity}' id="q${a.numberId}">
+
+<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" onclick="plus2(\'' + ${a.numberId} + '\')">
+<i class="fs-16 zmdi zmdi-plus"></i>
+</div>
+</div>
+</td>
+<td class="column-5" id="total${a.numberId}">${a.prices}</td>
+<td class="column-6" onclick="deleteInCart(\'' + ${a.numberId} + '\')" >X</td>
+</tr>`
+    }
+
+    function minus2(a) {
+        let idQuantity = 'q' + a;
+        let idProduct = 'p' + a;
+        let quantity = parseInt(document.getElementById(idQuantity).value);
+        if (quantity >= 1) {
+            newQuantity = quantity - 1;
+            total = parseInt(document.getElementById(idProduct).innerText) * (parseInt(newQuantity));
+            numberId = a;//number id in cart
+            $.ajax({
+                type: "PUT",
+                url: `api/cart/${numberId}/${newQuantity}/${total}`,
+                success: showCart()
+            })
+        }
+    }
+
+
+    function plus2(a) {
+        let idQuantity = 'q' + a;
+        let idProduct = 'p' + a;
+        let quantity = parseInt(document.getElementById(idQuantity).value);
+        if (quantity >= 1) {
+
+            newQuantity = quantity + 1;
+            total = parseInt(document.getElementById(idProduct).innerText) * (parseInt(newQuantity));
+            numberId = a;
+            $.ajax({
+                type: "PUT",
+                url: `api/cart/${numberId}/${newQuantity}/${total}`,
+                success: showCart()
+            })
+        }
+    }
+
+    function buy() {
+        let userId = $('#userId').val()
+        let receiver = $('#receiver').val();
+        let phone = $('#phone').val();
+        let address = $('#address').val()
+        let information = receiver + '-' + phone + '-' + address;
+        let newOrder = {
+            total: totalPay,
+            information: information,
+            appUser: {
+                userId: userId
+            }
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(newOrder),
+            type: "POST",
+            url: "/api/cart/buy",
+            success: alert("Order Sucess"),
+        })
+    }
+
+    function deleteInCart(a) {
+        let numberId = a; //Number id in cart
+        if (confirm("You you want to delete")) {
+            $.ajax({
+                type: "DELETE",
+                url: `api/cart/${numberId}`,
+                success: showCart()
+            })
+        }
+    }
+</script>

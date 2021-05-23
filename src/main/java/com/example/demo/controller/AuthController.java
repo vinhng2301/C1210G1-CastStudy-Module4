@@ -50,7 +50,7 @@ public class AuthController {
         return "login";
     }
     @PostMapping("/api/auth/login")
-    public String login(@Valid  LoginForm loginRequest, HttpSession session){
+    public String login(@Valid LoginForm loginRequest, HttpSession session){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -83,7 +83,7 @@ public class AuthController {
             return "redirect:/signup";
         }
         AppUser appUser = new AppUser(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), signUpForm.getPhone(), passwordEncoder.encode(signUpForm.getPassword()));
-        Set<String> strRoles = signUpForm.getAppRole();
+//        Set<String> strRoles = signUpForm.getAppRole();
         Set<AppRole> roles = new HashSet<>();
 //        strRoles.forEach(role -> {
 //

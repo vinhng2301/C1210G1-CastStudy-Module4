@@ -30,11 +30,17 @@ public class ApiWareController {
         return new ResponseEntity<>(warehouses, HttpStatus.OK);
     }
     @GetMapping("/{key}")
-    public ResponseEntity<Iterable<Product>> search(@PathVariable String key){
+    public ResponseEntity<Iterable<Product>> search(@PathVariable("key") String key){
         List<Product> list = (List<Product>) productService.listProductFindByName(key);
         if(list.isEmpty()){
             return new ResponseEntity<>(productService.findAll(),HttpStatus.OK);
         }
         else  return  new ResponseEntity<>(list,HttpStatus.OK);
     }
+    @GetMapping("/category/{key}")
+    public ResponseEntity<Iterable<Product>> sort(@PathVariable("key") String key){
+        List<Product> list = (List<Product>) productService.findProductByCategory(key);
+          return  new ResponseEntity<>(list,HttpStatus.OK);
+    }
+
 }
