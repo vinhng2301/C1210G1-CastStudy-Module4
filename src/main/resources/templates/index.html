@@ -55,16 +55,16 @@
                     <a href="#" class="flex-c-m trans-04 p-lr-25">
                         Help & FAQs
                     </a>
-
-                    <a href="/api/auth/login" class="flex-c-m trans-04 p-lr-25">
-                        My Account
+                    <a  class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').getUserId == null}">
+                        hello guest
                     </a>
-
-                    <a href="/user-information" class="flex-c-m trans-04 p-lr-25">
-                        hello <span th:utext="${session.get('user').getName()}"></span>
+                    <a href="/user-information" class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').getUserId != null}">
+                        hello &nbsp <span th:utext="${session.get('user').getName()}"></span>
                     </a>
-
-                    <a href="logout" class="flex-c-m trans-04 p-lr-25">
+                    <a href="/api/auth/login" class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').getUserId == null}">
+                        Đăng nhập
+                    </a>
+                    <a href="logout" class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').getUserId != null}">
                         logout
                     </a>
                 </div>
