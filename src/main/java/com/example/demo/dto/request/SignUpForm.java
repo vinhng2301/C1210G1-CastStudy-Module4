@@ -7,18 +7,17 @@ public class SignUpForm {
     private String email;
     private String password;
     private String phone;
-    private Set<String> appRole;
+
 
     public SignUpForm() {
     }
 
-    public SignUpForm(String name, String username, String email, String password, String phone, Set<String> appRole) {
+    public SignUpForm(String name, String username, String email, String password, String phone) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
         this.phone = phone;
-        this.appRole = appRole;
     }
 
     public String getName() {
@@ -61,11 +60,4 @@ public class SignUpForm {
         this.phone = phone;
     }
 
-    public Set<String> getAppRole() {
-        return appRole;
-    }
-
-    public void setAppRole(Set<String> appRole) {
-        this.appRole = appRole;
-    }
 }

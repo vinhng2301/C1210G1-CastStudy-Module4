@@ -83,7 +83,6 @@ public class AuthController {
             return "redirect:/signup";
         }
         AppUser appUser = new AppUser(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), signUpForm.getPhone(), passwordEncoder.encode(signUpForm.getPassword()));
-        Set<String> strRoles = signUpForm.getAppRole();
         Set<AppRole> roles = new HashSet<>();
 //        strRoles.forEach(role -> {
 //
