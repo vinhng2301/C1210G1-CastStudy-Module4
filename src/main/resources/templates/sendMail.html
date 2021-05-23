@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Change Password</title>
+</head>
+<body>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+
+<div class="container">
+    <div class="row">
+        <h2><strong>Change Password </strong><br/></h2><br/>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <form th:action="@{/sendemail}" method="post">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label >Password</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                </div>
+                <div class="form-check">
+                    <button type="submit" class="btn btn-primary">bạn sẽ được gửi một đoạn mã xác nhận vào mail</button>
+                </div>
+
+            </form>
+
+        </div>
+
+
+
+    </div>
+</div>
+</body>
+</html>
+<!--<script>-->
+<!--    jQuery(document).ready(function(){-->
+
+
+<!--        // Show password Button-->
+<!--        $("#showpassword").on('click', function(){-->
+
+<!--            var pass = $("#password");-->
+<!--            var fieldtype = pass.attr('type');-->
+<!--            if (fieldtype == 'password') {-->
+<!--                pass.attr('type', 'text');-->
+<!--                $(this).text("Hide Password");-->
+<!--            }else{-->
+<!--                pass.attr('type', 'password');-->
+<!--                $(this).text("Show Password");-->
+<!--            }-->
+
+
+<!--        });-->
+<!--        -->
+<!--    });-->
+<!--    -->
+<!--</script>-->

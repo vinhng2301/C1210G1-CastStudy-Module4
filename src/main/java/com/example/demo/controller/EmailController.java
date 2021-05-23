@@ -1,51 +1,75 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.request.SendEmailForm;
+import com.example.demo.security.appuserprincipal.AppUserPrinciple;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.*;
 import javax.mail.internet.*;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 
-@RestController
+@Controller
 public class EmailController {
-    @RequestMapping(value = "/sendemail")
-    public String sendEmail() throws AddressException, MessagingException, IOException {
-        sendmail();
-        return "Email sent successfully";
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @GetMapping("/sendmail")
+    public String sendmailForm(){
+        return "sendMail";
     }
-    private void sendmail() throws AddressException, MessagingException, IOException {
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+    @PostMapping("/sendemail")
+    public String sendEmail(@Valid SendEmailForm sendEmailForm, HttpSession session) throws AddressException, MessagingException, IOException {
+        AppUserPrinciple appUserPrinciple = (AppUserPrinciple)session.getAttribute("user");
+        boolean a = passwordEncoder.matches(sendEmailForm.getPassword(),appUserPrinciple.getPassword());
+        if((sendEmailForm.getEmail()).equals(appUserPrinciple.getEmail()) && a){
+            String number =  String.valueOf(Math.round(Math.floor(Math.random()*1000000)));
+            session.setAttribute("number",number);
+            sendmail(number,sendEmailForm.getEmail());
+            return "redirect:/changePassword";
+        }else {
+            return "sendMail";
+        }
 
-        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("tài khoản gửi", "111");
-            }
-        });
-        Message msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress("địa chỉ gửi tới", false)); ///???
+    }
+    private void sendmail(String number,String email) throws AddressException, MessagingException, IOException {
+        Properties mailServerProperties;
+        Session getMailSession;
+        MimeMessage mailMessage;
 
-        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("địa chỉ nhận"));
-        msg.setSubject("tiêu đề?");
-        msg.setContent("nội dung", "text/html");
-        msg.setSentDate(new Date());
+        // Step1: setup Mail Server
+        mailServerProperties = System.getProperties();
+        mailServerProperties.put("mail.smtp.port", "587");
+        mailServerProperties.put("mail.smtp.auth", "true");
+        mailServerProperties.put("mail.smtp.starttls.enable", "true");
 
-        MimeBodyPart messageBodyPart = new MimeBodyPart();
-        messageBodyPart.setContent("nội dung", "text/html");
+        // Step2: get Mail Session
+        getMailSession = Session.getDefaultInstance(mailServerProperties, null);
+        mailMessage = new MimeMessage(getMailSession);
 
-        Multipart multipart = new MimeMultipart();
-        multipart.addBodyPart(messageBodyPart);
-        MimeBodyPart attachPart = new MimeBodyPart();
+        mailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(email)); //Thay abc bằng địa chỉ người nhận
 
-        attachPart.attachFile("?");//file?
-        multipart.addBodyPart(attachPart);
-        msg.setContent(multipart);
-        Transport.send(msg);
+        // Bạn có thể chọn CC, BCC
+//    generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("cc@gmail.com")); //Địa chỉ cc gmail
+
+
+        mailMessage.setSubject("Email gửi mã xác nhận");
+        mailMessage.setText(number);
+
+        // Step3: Send mail
+        Transport transport = getMailSession.getTransport("smtp");
+
+        // Thay your_gmail thành gmail của bạn, thay your_password thành mật khẩu gmail của bạn
+        transport.connect("smtp.gmail.com", "waygon23@gmail.com", "steroids23");
+        transport.sendMessage(mailMessage, mailMessage.getAllRecipients());
+        transport.close();
     }
 }
