@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form name='login-form' th:action="@{/api/auth/login}" method='POST'>
+    <table>
+        <tr>
+            <td>Username:</td>
+            <td><input type='text' name='username' value=''></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type='password' name='password' /></td>
+        </tr>
+        <tr>
+            <td><input name="submit" type="submit" value="submit" /></td>
+        </tr>
+    </table>
+    <a href="/api/auth/signup" class="flex-c-m trans-04 p-lr-25">
+        signup
+    </a>
+    <!--    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />-->
+</body>
+</html>

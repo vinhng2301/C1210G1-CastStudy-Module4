@@ -23,7 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+
 
 
 import javax.servlet.http.HttpSession;
@@ -45,13 +45,12 @@ public class AuthController {
     JwtProvider jwtProvider;
     @Autowired
     AuthenticationManager authenticationManager;
-
     @GetMapping("/api/auth/login")
-    public ModelAndView loginForm(){
-        return new ModelAndView("/login");
+    public String loginForm(){
+        return "login";
     }
     @PostMapping("/api/auth/login")
-    public String login(@Valid  LoginForm loginRequest, HttpSession session , Model model) {  //@RequestBody
+    public String login(@Valid  LoginForm loginRequest, HttpSession session){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -60,20 +59,28 @@ public class AuthController {
         String jwt = jwtProvider.generateJwtToken(authentication);
         AppUserPrinciple userDetails = (AppUserPrinciple) authentication.getPrincipal();
         session.setAttribute("user", userDetails); //dăng lý session user
-        JwtResponse jwtResponse = new JwtResponse(jwt, userDetails.getUsername(),
+        ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(),
                 userDetails.getUsername(), userDetails.getEmail(), userDetails.getPhone(),
-                userDetails.getAuthorities()); //cái này là role nhé
-        model.addAttribute("jwtResponse",jwtResponse);
+                userDetails.getAuthorities() //cái này là role nhé
+        ));
         return "redirect:/home";
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpForm) {
+    @GetMapping("/api/auth/signup")
+    public String signupForm(){  //Model model
+//        model.addAttribute("signupForm",new SignUpForm());
+        return "signup";
+    }
+    @PostMapping("/api/auth/signup")
+    public String signup(@Valid SignUpForm signUpForm, HttpSession session){
+//    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpForm) {
         if (appUserService.existsByUsername(signUpForm.getUsername())) {
-            return new ResponseEntity<>(new ResponseMessage("Username is existed"), HttpStatus.BAD_REQUEST);
+            new ResponseEntity<>(new ResponseMessage("Username is existed"), HttpStatus.BAD_REQUEST);
+            return "redirect:/signup";
         }
         if (appUserService.existsByEmail(signUpForm.getEmail())) {
-            return new ResponseEntity<>(new ResponseMessage("email is existed"), HttpStatus.BAD_REQUEST);
+            new ResponseEntity<>(new ResponseMessage("email is existed"), HttpStatus.BAD_REQUEST);
+            return "redirect:/signup";
         }
         AppUser appUser = new AppUser(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), signUpForm.getPhone(), passwordEncoder.encode(signUpForm.getPassword()));
         Set<String> strRoles = signUpForm.getAppRole();
@@ -96,25 +103,10 @@ public class AuthController {
         // để đây sau a sửa lại mặc định là user, tk admin tự fix trong database
         appUser.setAppRole(roles);
         appUserService.save(appUser);
-        return new ResponseEntity<>(new ResponseMessage("registered success"), HttpStatus.OK); // a tra trên mạng là cái dưới , không biết nó có phải chỉ là thông báo không vì nó vẫn tạo đc bt
+        session.setAttribute("user",appUser);
+        new ResponseEntity<>(new ResponseMessage("registered success"), HttpStatus.OK); // a tra trên mạng là cái dưới , không biết nó có phải chỉ là thông báo không vì nó vẫn tạo đc bt
 //        return ResponseEntity.ok(new ResponseMessage("registered success");
+        return "redirect:/home";
     }
 
-//    @DeleteMapping("/logout")
-//    public class AllCookieClearingLogoutConfiguration extends WebSecurityConfigurerAdapter {
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//            http.logout(logout -> logout
-//                    .logoutUrl("/cookies/cookielogout")
-//                    .addLogoutHandler((request, response, auth) -> {
-//                        for (Cookie cookie : request.getCookies()) {
-//                            String cookieName = cookie.getName();
-//                            Cookie cookieToDelete = new Cookie(cookieName, null);
-//                            cookieToDelete.setMaxAge(0);
-//                            response.addCookie(cookieToDelete);
-//                        }
-//                    }));
-//        }
-//    }
-/// có vẻ như logout chỉ cần remove session
 }

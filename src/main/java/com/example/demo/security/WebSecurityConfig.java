@@ -1,4 +1,3 @@
-
 package com.example.demo.security;
 
 
@@ -56,18 +55,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.cors().and().csrf().disable().
                 authorizeRequests()
                 .antMatchers("/api/auth/**", "/**").permitAll() //những link mn đều có quyền truy cập , thêm vào bằng dấu ,những cái mà lấy id a nghĩ là lên thêm 1 / nữa như cũ ý
-
 //                .antMatchers("abcc").access("hasRoll('ADMIN')")  //quyền admin
                 .anyRequest().authenticated()  //các cái khác đều phải xác thực mới được vào
                 .and()
-//                .formLogin().loginProcessingUrl("api/auth/login")
-//                .defaultSuccessUrl("/home")
-//                .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthEntryPoint)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/home") //chưa test , chạy thì comment lại
+                .and().logout().logoutUrl("/logout").invalidateHttpSession(true).clearAuthentication(true).logoutSuccessUrl("/home") //chưa test , chạy thì comment lại
         ;
         httpSecurity.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
