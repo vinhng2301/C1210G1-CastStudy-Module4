@@ -1,41 +1,92 @@
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+<!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
+<!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+<!--&lt;!&ndash;&#45;&#45;&#45;&#45; Include the above in your HEAD tag &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="ie=edge">-->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+<!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">-->
+<!--    <link rel="stylesheet" href="../customer/style.css">-->
+<!--    <title>Sign Up</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">-->
+<!--    <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"-->
+<!--       href="/home" >Trang chu?</a>-->
+<!--</div>-->
+<!--<form th:action="@{/api/auth/signup}" method="post" class="form-signup">-->
+<!--&lt;!&ndash;    <a>${message}</a>&ndash;&gt;-->
+<!--    <input type="text" id="user-name"  name="username" class="form-control" required placeholder="UserName"  autofocus="">-->
+<!--    <input type="password" name="password" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="mï¿½?t khï¿½?u cï¿½?n co? i?t nhï¿½?t mï¿½?t sï¿½? va? mï¿½?t ch?? ca?i , ng??n nhï¿½?t la? 6 ky? t??"  id="user-pass" class="form-control" placeholder="Password" required autofocus="">-->
+<!--    <input type="password" name="rePassword" pattern="(?=.*\d)(?=.*[a-z]).{6,}"  id="user-repeatpass" class="form-control" placeholder="Repeat Password" required autofocus="">-->
+<!--    <input type="text" name="name" class="form-control" placeholder="Full Name" required="" autofocus="">-->
+<!--    <input type="email" name="email" class="form-control" placeholder="email" required="" autofocus="">-->
+<!--    <input type="number" name="phone" pattern="(?=.*[0-9]{9,});" title="Sï¿½? ?iï¿½?n thoa?i khï¿½ng h??p lï¿½?" class="form-control" placeholder="Phone Number" required="" autofocus="">-->
+
+<!--    <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-user-plus"></i> Sign Up</button>-->
+<!--</form>-->
+<!--<br>-->
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+<!--<script src="../customer/login.js"></script>-->
+<!--</body>-->
+<!--</html>-->
 
 <!DOCTYPE html>
 <html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="stylesheet" href="../customer/style.css">
-    <title>Sign Up</title>
+    <title>Change Password</title>
 </head>
 <body>
-<div class="col-lg-2 col-6 btn btn-outline-success" style="margin: auto; text-align: center">
-    <a style="margin-left: auto; margin-top: 10px; margin-bottom: 10px"
-       href="/home" >Trang chu?</a>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<a href="/home" class="btn btn-primary">Home</a>
+<div class="container">
+    <div class="row">
+        <h2><strong>Sign Up </strong><br/></h2><br/>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <form th:action="@{/api/auth/signup}" method="post">
+                <div class="form-group">
+                    <input type="text" id="user-name"  name="username" class="form-control" aria-describedby="emailHelp" required placeholder="UserName"  autofocus="">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="mï¿½?t khï¿½?u cï¿½?n co? i?t nhï¿½?t mï¿½?t sï¿½? va? mï¿½?t ch?? ca?i , ng??n nhï¿½?t la? 6 ky? t??"  class="form-control"  id="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="rePassword" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="mï¿½?t khï¿½?u cï¿½?n co? i?t nhï¿½?t mï¿½?t sï¿½? va? mï¿½?t ch?? ca?i , ng??n nhï¿½?t la? 6 ky? t??"  class="form-control"  id="rePassword" placeholder="RePassword">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="name" class="form-control" placeholder="Full Name" required="" autofocus="">
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" class="form-control" placeholder="Email" required="" autofocus="">
+                </div>
+                <div class="form-group">
+                    <input type="number" name="phone" pattern="(?=.*[0-9]{9,});" title="sá»‘ Ä‘iá»‡n thoáº¡i khÃ´ng há»£p lá»‡" class="form-control" placeholder="Phone Number" required="" autofocus="">
+                </div>
+                <div class="form-check">
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
 </div>
-<form th:action="@{/api/auth/signup}" method="post" class="form-signup">
-<!--    <a>${message}</a>-->
-    <input type="text" id="user-name"  name="username" class="form-control" required placeholder="UserName"  autofocus="">
-    <input type="password" name="password" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="mâ?t khâ?u câ?n co? i?t nhâ?t mô?t sô? va? mô?t ch?? ca?i , ng??n nhâ?t la? 6 ky? t??"  id="user-pass" class="form-control" placeholder="Password" required autofocus="">
-    <input type="password" name="rePassword" pattern="(?=.*\d)(?=.*[a-z]).{6,}"  id="user-repeatpass" class="form-control" placeholder="Repeat Password" required autofocus="">
-    <input type="text" name="name" class="form-control" placeholder="Full Name" required="" autofocus="">
-    <input type="email" name="email" class="form-control" placeholder="email" required="" autofocus="">
-    <input type="number" name="phone" pattern="(?=.*[0-9]{9,});" title="Sô? ?iê?n thoa?i không h??p lê?" class="form-control" placeholder="Phone Number" required="" autofocus="">
-
-    <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-user-plus"></i> Sign Up</button>
-</form>
-<br>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="../customer/login.js"></script>
 </body>
 </html>
