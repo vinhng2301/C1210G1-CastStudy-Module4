@@ -1,3 +1,4 @@
+
 package com.example.demo.security;
 
 
@@ -59,6 +60,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("abcc").access("hasRoll('ADMIN')")  //quyền admin
                 .anyRequest().authenticated()  //các cái khác đều phải xác thực mới được vào
                 .and()
+//                .formLogin().loginProcessingUrl("api/auth/login")
+//                .defaultSuccessUrl("/home")
+//                .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthEntryPoint)
                 .and()

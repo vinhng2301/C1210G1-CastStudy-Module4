@@ -926,21 +926,21 @@
 <script>
     function seeReview() {
         let productId = parseInt(document.getElementById("productId").value);
+        checkBuy()
         $.ajax({
             type: "GET",
             url: `api/review/${productId}`,
             success: function (data) {
-                if(data==null){
-                    return;
-                }
-                console.log(data)
                 console.log(checkBuy())
                 content2 = ""
-                for (i = 0; i < data.length; i++) {
-                    content2 += printReviews(data[i])
+                if (data != null) {
+                    for (i = 0; i < data.length; i++) {
+                        content2 += printReviews(data[i])
+                    }
                 }
-                if (checkBuy()) {
-                    content2 += `  <form class="w-full">
+
+                if () {
+                    content2 += `<form class="w-full">
  <h5 class="mtext-108 cl2 p-b-7">
       Add a review </h5>
  <p class="stext-102 cl6">
@@ -973,8 +973,8 @@ Your Rating
             },
             error: console.log(onerror)
         })
-
     }
+
 
     function printReviews(a) {
         return ` <div class="flex-w flex-t p-b-68">
@@ -1029,15 +1029,17 @@ ${a.comment}
     function checkBuy() {
         let userId = 1;
         let productId = document.getElementById("productId").value;
-       return    $.ajax({
+        $.ajax({
             type: "GET",
             url: `api/review/${userId}/${productId}`,
             success: function (data) {
                 console.log(data)
-                return data
             }
         })
     }
+   isBought =  function (data){
+        return this.data=data;
+   }
 </script>
 <!--===============================================================================================-->
 <script src="vendor/jquery/jquery-3.2.1.min.js"></script>

@@ -1,15 +1,8 @@
 package com.example.demo.controller;
-
-import com.example.demo.model.AppUser;
-import com.example.demo.model.Cart;
-import com.example.demo.model.Product;
-import com.example.demo.model.Warehouse;
 import com.example.demo.service.CartService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.WareService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

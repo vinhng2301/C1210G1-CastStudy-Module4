@@ -44,7 +44,7 @@
                     <option value="done">-done-</option>
                 </select>
                 </td>
-                <td><a style="text-decoration: none" href="#"
+                <td><a style="text-decoration: none" th:href="@{/order-manager/detail/{orderId}(orderId=${order.getOrderId()})}"
                        th:onclick="|seeThisOrdersDetail('${order.getOrderId()}')|">View</a></td>
             </tr>
         </table>
@@ -75,40 +75,12 @@
                     <option value="done">-done-</option>`
                         document.getElementById(id).innerHTML = content;
                     } else if (data.status == "done") {
-                        deleteOneOrder(id)
+                        location.reload()
                     }
 
                 }
             })
         }
-    }
-
-    // xoa san pham nay khi o trang thai 'done'
-    function deleteOneOrder(id) {
-        console.log(id)
-        $.ajax({
-            type: "DELETE",
-            url: `api/admin/${id}`,
-            success(data) {
-                console.log(data)
-                alert("Delivery successful");
-                let content1 = `  <tr>
-                <th>#number</th>
-                <th>account</th>
-                <th>date-order</th>
-                <th>$total</th>
-                <th>status</th>
-                <th>view</th>
-            </tr>`
-                let content2 = ""
-                for (i = 0; i < data.length; i++) {
-                    content2 += rePrint(data[i]);
-                }
-                let content = content1 + content2;
-                document.getElementById("rePrint").innerHTML = content;
-                console.log(document.getElementById("rePrint").innerHTML)
-            }
-        })
     }
 
     function rePrint(a) {

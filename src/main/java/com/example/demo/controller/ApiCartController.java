@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -72,8 +74,10 @@ public class ApiCartController {
 //        return new ResponseEntity(HttpStatus.OK);
 //    }
 
+
+    //update gio hang (tang , giam, so  luong  san phamvv)
     @PutMapping("{numberId}/{quantity}/{prices}")
-    public ResponseEntity<Cart> updataCart(@PathVariable("numberId") Long id, @PathVariable("quantity") int quantity, @PathVariable("prices") String prices) {
+    public ResponseEntity<Cart> updateCart(@PathVariable("numberId") Long id, @PathVariable("quantity") int quantity, @PathVariable("prices") String prices) {
         Cart cart = cartService.findById(id);
         cart.setQuantity(quantity);
         cart.setPrices(prices);
@@ -90,6 +94,10 @@ public class ApiCartController {
     @PostMapping("/buy")
     public ResponseEntity<List<Cart>> doBuy(@RequestBody Orders order) {
         AppUser user = userService.findById(order.getAppUser().getUserId());
+        order.setStatus("wait");
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        order.setOrderDate(formatter.format(date));
         orderService.save(order);
         Iterable<Cart> carts = cartService.getListCartByUserId(user.getUserId());
         for (Cart cart : (List<Cart>) carts) {
@@ -100,8 +108,9 @@ public class ApiCartController {
             orderHistory.setQuantity(cart.getQuantity());
             orderHistory.setPrices(cart.getPrices());
             orderHistory.setAppUser(user);
-            orderHistory.setStatus("wait");
+            orderHistory.setStatus(order.getStatus());
             orderHistory.setOrders(order);
+            orderHistory.setTimeOrder(order.getOrderDate());
             orderHistoryService.save(orderHistory);
         }
         cartService.deleteAll(carts);

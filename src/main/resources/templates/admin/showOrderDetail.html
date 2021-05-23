@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+          crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+          crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row g-0">
+        <div class="col-sm-6 col-md-8"><a th:href="@{/order-manager}">Order Manager</a></div>
+        <div class="col-6 col-md-4">
+            <a th:href="@{/}"></a>
+        </div>
+    </div>
+    <div>
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>product</th>
+                <th>size</th>
+                <th>color</th>
+                <th>quantity</th>
+                <th>total</th>
+                <th>order-date</th>
+                <th>received-date</th>
+            </tr>
+            <tr th:each="o:${list}">
+                <td th:utext="${o.getProduct().getProductName()}"></td>
+                <td th:utext="${o.getSize()}"></td>
+                <td th:utext="${o.getColor()}"></td>
+                <td th:utext="${o.getQuantity()}"></td>
+                <td th:utext="${o.getPrices()}"></td>
+                <td th:utext="${o.getTimeOrder()}"></td>
+                <td th:utext="${o.getTimeReceived()}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

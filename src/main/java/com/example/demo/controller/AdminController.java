@@ -1,22 +1,23 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.OrderHistory;
 import com.example.demo.model.Orders;
 import com.example.demo.model.Product;
 import com.example.demo.repository.OrderRepository;
+import com.example.demo.service.OrderHistoryService;
 import com.example.demo.service.OrderService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -27,6 +28,8 @@ public class AdminController {
     private UserService userService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private OrderHistoryService orderHistoryService;
 
     @GetMapping("/create-product")
     public ModelAndView showCreateForm() {
@@ -80,8 +83,14 @@ public class AdminController {
     //hien thi thong tin order de quan li
     @GetMapping("/order-manager")
     public ModelAndView showListOrders(@PageableDefault(size = 7) Pageable pageable){
-        Page<Orders> ordersPage = orderService.findAll(pageable);
+        Page<Orders> ordersPage = orderService.findOrdersByStatusNotDone("done",pageable);
         ModelAndView modelAndView = new ModelAndView("admin/ordersManager","orders",ordersPage);
+        return modelAndView;
+    }
+    @GetMapping("/order-manager/detail/{orderId}")
+    public ModelAndView seeDetailOrders(@PathVariable("orderId") Long id){
+        Iterable<OrderHistory> list = orderHistoryService.findOrderHistoryByOrderId(id);
+        ModelAndView modelAndView = new ModelAndView("admin/showOrderDetail","list",list);
         return modelAndView;
     }
 }

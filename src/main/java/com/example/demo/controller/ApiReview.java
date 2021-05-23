@@ -33,14 +33,14 @@ public class ApiReview {
         return new ResponseEntity<>(review, HttpStatus.OK);
     }
 
+    //check xem nguoi  nay da mua san pham nay chua
     @GetMapping("/{userId}/{productId}")
     public ResponseEntity<Boolean> checkAllowedToComment(@PathVariable("userId") Long userId , @PathVariable("productId") Long productId) {
-        //chi nhung nguoi mua san pham moi duoc comment\
-        Optional<OrderHistory> orderHistory = orderHistoryService.findOrderHistoryIdByUserIdAndProductId(userId,productId);
-        if(!orderHistory.isPresent() || !orderHistory.get().getStatus().equalsIgnoreCase("done")){
+        //chi nhung nguoi mua san pham moi duoc comment
+        List<OrderHistory> orderHistory = (List<OrderHistory>) orderHistoryService.findOrderHistoryByUserIdAndProductId(userId,productId);
+        if(orderHistory.isEmpty() || !orderHistory.get(0).getStatus().equalsIgnoreCase("done")){
             return new ResponseEntity<>(false,HttpStatus.OK);
         }
         else return new ResponseEntity<>(true,HttpStatus.OK);
-
     }
 }

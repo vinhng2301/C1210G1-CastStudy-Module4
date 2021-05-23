@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table
@@ -15,8 +14,8 @@ public class OrderHistory {
     private String color;
     private String size;
     private int quantity;
-    private Date timeReceived;
-    private Date  timeOrder;
+    private String timeReceived;
+    private String timeOrder;
     private String status;
     private String prices;
     @ManyToOne
@@ -31,7 +30,7 @@ public class OrderHistory {
         this.orders = orders;
     }
 
-    public OrderHistory(Long id, Product product, String color, String size, int quantity, Date timeReceived, Date timeOrder, String status, String prices, Orders orders, AppUser appUser) {
+    public OrderHistory(Long id, Product product, String color, String size, int quantity, String timeReceived, String timeOrder, String status, String prices, Orders orders, AppUser appUser) {
         this.id = id;
         this.product = product;
         this.color = color;
@@ -99,19 +98,19 @@ public class OrderHistory {
         this.prices = prices;
     }
 
-    public Date getTimeReceived() {
+    public String getTimeReceived() {
         return timeReceived;
     }
 
-    public void setTimeReceived(Date timeReceived) {
+    public void setTimeReceived(String timeReceived) {
         this.timeReceived = timeReceived;
     }
 
-    public Date getTimeOrder() {
+    public String getTimeOrder() {
         return timeOrder;
     }
 
-    public void setTimeOrder(Date timeOrder) {
+    public void setTimeOrder(String timeOrder) {
         this.timeOrder = timeOrder;
     }
 
@@ -129,6 +128,19 @@ public class OrderHistory {
     }
 
     public void setAppUser(AppUser appUser) {
+        this.appUser = appUser;
+    }
+
+    public OrderHistory(Long id, Product product, String color, String size, int quantity, String timeReceived, String timeOrder, String status, String prices, AppUser appUser) {
+        this.id = id;
+        this.product = product;
+        this.color = color;
+        this.size = size;
+        this.quantity = quantity;
+        this.timeReceived = timeReceived;
+        this.timeOrder = timeOrder;
+        this.status = status;
+        this.prices = prices;
         this.appUser = appUser;
     }
 }

@@ -20,8 +20,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpSession;
@@ -29,8 +31,8 @@ import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
 
-@RestController
-@RequestMapping("/api/auth")
+@Controller
+//@RequestMapping("/api/auth")
 //có quyền vào để đăng nhập hoặc đăng ký
 public class AuthController {
     @Autowired
@@ -44,8 +46,12 @@ public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest, HttpSession session) {
+    @GetMapping("/api/auth/login")
+    public ModelAndView loginForm(){
+        return new ModelAndView("/login");
+    }
+    @PostMapping("/api/auth/login")
+    public String login(@Valid  LoginForm loginRequest, HttpSession session , Model model) {  //@RequestBody
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -54,10 +60,11 @@ public class AuthController {
         String jwt = jwtProvider.generateJwtToken(authentication);
         AppUserPrinciple userDetails = (AppUserPrinciple) authentication.getPrincipal();
         session.setAttribute("user", userDetails); //dăng lý session user
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(),
+        JwtResponse jwtResponse = new JwtResponse(jwt, userDetails.getUsername(),
                 userDetails.getUsername(), userDetails.getEmail(), userDetails.getPhone(),
-                userDetails.getAuthorities() //cái này là role nhé
-        ));
+                userDetails.getAuthorities()); //cái này là role nhé
+        model.addAttribute("jwtResponse",jwtResponse);
+        return "redirect:/home";
     }
 
     @PostMapping("/signup")
@@ -81,9 +88,9 @@ public class AuthController {
 //
 //                    break;
 //                default:
-                    AppRole userRole = roleService.findByName(RoleName.USER)
-                            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
-                    roles.add(userRole);
+        AppRole userRole = roleService.findByName(RoleName.USER)
+                .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
+        roles.add(userRole);
 //            }
 //        });
         // để đây sau a sửa lại mặc định là user, tk admin tự fix trong database

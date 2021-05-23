@@ -12,7 +12,7 @@ public class OrderHistoryService implements IGeneric<OrderHistory>{
     OrderHistoryRepository orderHistoryRepository;
     @Override
     public Iterable<OrderHistory> findAll() {
-        return null;
+        return orderHistoryRepository.findAll();
     }
 
     @Override
@@ -29,10 +29,11 @@ public class OrderHistoryService implements IGeneric<OrderHistory>{
     public void delete(Long id) {
 
     }
-    public Optional<OrderHistory> findOrderHistoryIdByUserIdAndProductId(Long userId, Long productId){
-        return orderHistoryRepository.findOrderHistoryByAppUserUserIdAndProductProductId(userId,productId);
+    public Iterable<OrderHistory> findOrderHistoryByUserIdAndProductId(Long userId, Long productId){
+        return orderHistoryRepository.findOrderHistoriesByAppUserUserIdAndProductProductId(userId,productId);
     }
-    public Iterable<OrderHistory> findOrderHistoryByOrderId(Long id){
-        return  orderHistoryRepository.findOrderHistoryByOrdersOrderId(id);
+    public Iterable<OrderHistory> findOrderHistoryByOrderId(Long id ){
+        return   orderHistoryRepository.findOrderHistoriesByOrdersOrderId(id);
     }
+
 }
