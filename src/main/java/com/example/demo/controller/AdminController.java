@@ -3,17 +3,14 @@ package com.example.demo.controller;
 import com.example.demo.model.OrderHistory;
 import com.example.demo.model.Orders;
 import com.example.demo.model.Product;
-import com.example.demo.repository.OrderRepository;
-import com.example.demo.service.OrderHistoryService;
-import com.example.demo.service.OrderService;
-import com.example.demo.service.ProductService;
-import com.example.demo.service.UserService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.example.demo.model.Warehouse;
+import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,6 +26,8 @@ public class AdminController {
     @Autowired
     private OrderService orderService;
     @Autowired
+    private WareService wareService;
+    @Autowired
     private OrderHistoryService orderHistoryService;
 
     @GetMapping("/create-product")
@@ -37,6 +36,7 @@ public class AdminController {
         modelAndView.addObject("product", new Product());
         return modelAndView;
     }
+
     @PostMapping("/create-product")
     public ModelAndView saveProduct(@ModelAttribute("product") Product product) {
         productService.save(product);
@@ -52,6 +52,7 @@ public class AdminController {
         modelAndView.addObject("products", productService.findAll());
         return modelAndView;
     }
+
     @GetMapping("/edit-product/{id}")
     public ModelAndView showEditForm(@PathVariable Long id) {
         Optional<Product> product = Optional.ofNullable(productService.findById(id));
@@ -82,15 +83,50 @@ public class AdminController {
 
     //hien thi thong tin order de quan li
     @GetMapping("/order-manager")
-    public ModelAndView showListOrders(@PageableDefault(size = 7) Pageable pageable){
-        Page<Orders> ordersPage = orderService.findOrdersByStatusNotDone("done",pageable);
-        ModelAndView modelAndView = new ModelAndView("admin/ordersManager","orders",ordersPage);
+    public ModelAndView showListOrders(@PageableDefault(size = 7) Pageable pageable) {
+        Page<Orders> ordersPage = orderService.findOrdersByStatusNotDone("done", pageable);
+        ModelAndView modelAndView = new ModelAndView("admin/ordersManager", "orders", ordersPage);
         return modelAndView;
     }
+
     @GetMapping("/order-manager/detail/{orderId}")
-    public ModelAndView seeDetailOrders(@PathVariable("orderId") Long id){
+    public ModelAndView seeDetailOrders(@PathVariable("orderId") Long id) {
         Iterable<OrderHistory> list = orderHistoryService.findOrderHistoryByOrderId(id);
-        ModelAndView modelAndView = new ModelAndView("admin/showOrderDetail","list",list);
+        ModelAndView modelAndView = new ModelAndView("admin/showOrderDetail", "list", list);
         return modelAndView;
+    }
+
+
+    //Them san pham chi tiet, mau sac ,size,vvv
+    //hien ra list trc
+    @GetMapping("/product/detail/{id}")
+    public String getListProductDetail(@PathVariable("id") Long id, Model model) {
+        List<Warehouse> list = (List<Warehouse>) wareService.findAllWareByProductId(id);
+        model.addAttribute("list", list);
+        return "product/detail-list";
+    }
+
+    @GetMapping("form/create-detail")
+    public String getForm(Model model) {
+        model.addAttribute("warehouse", new Warehouse());
+        return "product/create-detail";
+    }
+
+    @PostMapping("/create-detail")
+    public String doCreateProductDetail(@ModelAttribute("warehouse") Warehouse warehouse) {
+        wareService.save(warehouse);
+        return "product/detail-list";
+    }
+
+    @GetMapping("edit/detail/{id}")
+    public String getFormEdit(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("warehouse", wareService.findById(id));
+        return "product/detail-edit";
+    }
+
+    @PostMapping("/edit-detail")
+    public String doEditProductDetail(@ModelAttribute("warehouse") Warehouse warehouse) {
+        wareService.save(warehouse);
+        return "product/detail-list";
     }
 }

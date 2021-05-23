@@ -17,7 +17,9 @@
     </tr>
     <th:block th:each="product : ${products}">
         <tr>
-            <td th:text="${product.productName}"></td>
+            <td >
+                <a th:href="@{/product/detail/{id}(id=${product.productId})}"><span th:text="${product.productName}"></span></a>
+            </td>
             <td th:text="${product.category}"></td>
             <td th:text="${product.description}"></td>
             <td th:text="${product.gender}"></td>
