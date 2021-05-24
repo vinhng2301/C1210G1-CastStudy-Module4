@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.reponse.JwtResponse;
 import com.example.demo.dto.reponse.ResponseMessage;
+import com.example.demo.dto.request.ChangePassword;
+import com.example.demo.dto.request.EditUserForm;
 import com.example.demo.dto.request.LoginForm;
 import com.example.demo.dto.request.SignUpForm;
 import com.example.demo.model.AppUser;
@@ -83,18 +85,11 @@ public class AuthController {
             return "redirect:/signup";
         }
         AppUser appUser = new AppUser(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), signUpForm.getPhone(), passwordEncoder.encode(signUpForm.getPassword()));
+<<<<<<< HEAD
 //        Set<String> strRoles = signUpForm.getAppRole();
+=======
+>>>>>>> 3c94f75a9ef3cd211be0f1526bbb8d0087e62e6d
         Set<AppRole> roles = new HashSet<>();
-//        strRoles.forEach(role -> {
-//
-//            switch (role) {
-//                case "admin":
-//                    AppRole adminRole = roleService.findByName(RoleName.ADMIN)
-//                            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
-//                    roles.add(adminRole);
-//
-//                    break;
-//                default:
         AppRole userRole = roleService.findByName(RoleName.USER)
                 .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
         roles.add(userRole);
@@ -103,10 +98,53 @@ public class AuthController {
         // để đây sau a sửa lại mặc định là user, tk admin tự fix trong database
         appUser.setAppRole(roles);
         appUserService.save(appUser);
-        session.setAttribute("user",appUser);
+        AppUserPrinciple userDetails = AppUserPrinciple.build(appUser);  //session chứa AppUserPrinciple
+        session.setAttribute("user",userDetails);
         new ResponseEntity<>(new ResponseMessage("registered success"), HttpStatus.OK); // a tra trên mạng là cái dưới , không biết nó có phải chỉ là thông báo không vì nó vẫn tạo đc bt
 //        return ResponseEntity.ok(new ResponseMessage("registered success");
         return "redirect:/home";
     }
+    @RequestMapping("/user-information")
+    public String info(){
+        return "user-information";
+    }
 
+    @GetMapping("/editUser")
+    public String editUserForm(){
+        return "editUser";
+    }
+    @PostMapping("/editUser")
+    public String editUser(@Valid EditUserForm editUserForm, HttpSession session){
+         AppUserPrinciple userDetails = (AppUserPrinciple) session.getAttribute("user");
+         session.removeAttribute("user");
+         AppUser appUser =appUserService.findById(userDetails.getUserId());
+         appUser.setName(editUserForm.getName());  ///??? tại sao dữ liệu lại được đổi mà trên database chưa đổi nếu không gọi save???
+         appUser.setPhone(editUserForm.getPhone());
+         appUserService.save(appUser);
+         userDetails.setName(editUserForm.getName());
+         userDetails.setPhone(editUserForm.getPhone());
+         session.setAttribute("user",userDetails);
+        return "redirect:/home";
+    }
+    @GetMapping("/changePassword")
+    public String changePasswordForm(){
+        return "changePassword";
+    }
+
+    @PostMapping("/changePassword")
+    public String changePassword(@Valid ChangePassword changePassword,HttpSession session){
+        AppUserPrinciple userPrinciple= (AppUserPrinciple) session.getAttribute("user");
+        AppUser appUser = appUserService.findById(userPrinciple.getUserId());
+        if(changePassword.getNumber().equals(session.getAttribute("number"))){
+            if((changePassword.getPassword()).equals(changePassword.getRePassword())){
+                session.removeAttribute("user");
+                session.removeAttribute("number");
+                appUser.setPassword(passwordEncoder.encode(changePassword.getPassword()));
+                AppUserPrinciple userPrinciple1 = AppUserPrinciple.build(appUser);
+                session.setAttribute("user", userPrinciple1);
+                return "redirect:/home";
+            }
+        }
+        return "changePassword";
+    }
 }

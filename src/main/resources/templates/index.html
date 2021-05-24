@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+=======
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+>>>>>>> 3c94f75a9ef3cd211be0f1526bbb8d0087e62e6d
 
 <head>
     <title>Home</title>
@@ -55,6 +60,7 @@
                     <a href="#" class="flex-c-m trans-04 p-lr-25">
                         Help & FAQs
                     </a>
+<<<<<<< HEAD
                     <a href="/api/auth/login" class="flex-c-m trans-04 p-lr-25">
                         My Account
                     </a>
@@ -63,6 +69,19 @@
                     </a>
                     <a href="#" class="flex-c-m trans-04 p-lr-25">
                         <input id="userId" th:value="${session.get('user').userId}" hidden>
+=======
+                    <a  class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').getUserId == null}">
+                        hello guest
+                    </a>
+                    <a href="/user-information" class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').getUserId != null}">
+                        hello &nbsp <span th:utext="${session.get('user').getName()}"></span>
+                    </a>
+                    <a href="/api/auth/login" class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').getUserId == null}">
+                        Đăng nhập
+                    </a>
+                    <a href="logout" class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').getUserId != null}">
+                        logout
+>>>>>>> 3c94f75a9ef3cd211be0f1526bbb8d0087e62e6d
                     </a>
                 </div>
             </div>
@@ -72,7 +91,7 @@
             <nav class="limiter-menu-desktop container">
 
                 <!-- Logo desktop -->
-                <a href="#" class="logo">
+                <a href="/home" class="logo">
                     <img src="images/icons/logo-01.png" alt="IMG-LOGO">
                 </a>
 
@@ -80,9 +99,9 @@
                 <div class="menu-desktop">
                     <ul class="main-menu">
                         <li class="active-menu">
-                            <a href="index.html">Home</a>
+                            <a href="/home">Home</a>
                             <ul class="sub-menu">
-                                <li><a href="/index.html">Homepage</a></li>
+                                <li><a href="/home">Homepage</a></li>
                             </ul>
                         </li>
 

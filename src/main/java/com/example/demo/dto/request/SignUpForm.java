@@ -7,6 +7,10 @@ public class SignUpForm {
     private String email;
     private String password;
     private String phone;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3c94f75a9ef3cd211be0f1526bbb8d0087e62e6d
 
     public SignUpForm() {
     }
