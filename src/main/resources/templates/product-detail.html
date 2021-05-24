@@ -1528,7 +1528,11 @@ Proceed to Checkout
         let idQuantity = 'q' + a;
         let idProduct = 'p' + a;
         let quantity = parseInt(document.getElementById(idQuantity).value);
-        if (quantity >= 1) {
+        if(quantity==1){
+            deleteInCart(a);
+            showCart()
+        }
+        if (quantity > 1) {
             newQuantity = quantity - 1;
             total = parseInt(document.getElementById(idProduct).innerText) * (parseInt(newQuantity));
             numberId = a;//number id in cart
@@ -1589,7 +1593,7 @@ Proceed to Checkout
             $.ajax({
                 type: "DELETE",
                 url: `api/cart/${numberId}`,
-                success: showCart()
+                success:showCart()
             })
         }
     }

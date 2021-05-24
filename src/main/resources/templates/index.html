@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-=======
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
->>>>>>> 3c94f75a9ef3cd211be0f1526bbb8d0087e62e6d
 
 <head>
     <title>Home</title>
@@ -60,19 +55,21 @@
                     <a href="#" class="flex-c-m trans-04 p-lr-25">
                         Help & FAQs
                     </a>
-                    <a  class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').getUserId == null}">
+                    <a class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').userId==null}">
                         hello guest
                     </a>
-                    <a href="/user-information" class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').getUserId != null}">
-                        hello &nbsp <span th:utext="${session.get('user').getName()}"></span>
+                    <a href="/user-information" class="flex-c-m trans-04 p-lr-25"
+                       th:if="${session.get('user').userId != null}">
+                        hello &nbsp <span th:utext="${session.get('user').name}"></span>
                     </a>
-                    <a href="/api/auth/login" class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').getUserId == null}">
+                    <a href="/api/auth/login" class="flex-c-m trans-04 p-lr-25"
+                       th:if="${session.get('user').userId == null}">
                         Đăng nhập
                     </a>
-                    <a href="logout" class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').getUserId != null}">
+                    <a href="logout" class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').userId != null}">
                         logout
                     </a>
-                    <input id="userId" th:value="${session.get('user').userId}" hidden>
+                    <input th:if="${session.get('user').userId != null}" id="userId" th:value="${session.get('user').userId}" hidden>
                 </div>
             </div>
         </div>
@@ -1305,19 +1302,14 @@ function deleteInCart(a) {
 }
 </script>
 <script>
-    function searchProduct(key) {
+    function searchProduct() {
+        let key = document.getElementById('key').value
         $.ajax({
             type: "GET",
             url: `api/warehouse/${key}`,
             success: function (data) {
-                console.log(data)
-                let content = ``
-                for (i = 0; i < data.length; i++) {
-                    content += printProductAfterSearch(data[i])
-                }
-                document.getElementById("list-product").innerHTML = content;
-                content=" "
-                console.log(content)
+
+                document.getElementById("list-product-home").innerHTML = content;
             }
         })
     }
@@ -1385,7 +1377,7 @@ function deleteInCart(a) {
                 console.log(data)
                 let content = ``
                 for (i = 0; i < data.length; i++) {
-                    content += printProductAfterSearch(data[i]);
+                    content +=printProductAfterSearch(data[i]);
                 }
                 document.getElementById("list-product").innerHTML = content;
             }

@@ -11,7 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@SessionAttributes("user")
 public class HomeController {
+    @ModelAttribute("user")
+    public AppUser appUser(){
+        return new AppUser();
+    }
     @Autowired
     ProductService productService;
     @Autowired
