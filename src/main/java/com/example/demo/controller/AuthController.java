@@ -85,10 +85,7 @@ public class AuthController {
             return "redirect:/signup";
         }
         AppUser appUser = new AppUser(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), signUpForm.getPhone(), passwordEncoder.encode(signUpForm.getPassword()));
-<<<<<<< HEAD
 //        Set<String> strRoles = signUpForm.getAppRole();
-=======
->>>>>>> 3c94f75a9ef3cd211be0f1526bbb8d0087e62e6d
         Set<AppRole> roles = new HashSet<>();
         AppRole userRole = roleService.findByName(RoleName.USER)
                 .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));

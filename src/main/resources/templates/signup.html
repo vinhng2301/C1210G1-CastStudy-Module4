@@ -49,20 +49,6 @@
     <title>Change Password</title>
 </head>
 <body>
-<<<<<<< HEAD
-<div class="container text-center">
-    <div>
-        <h1>User Registration - Sign Up</h1>
-    </div>
-    <form th:action="@{/api/auth/signup}"
-          method="post" style="max-width: 600px; margin: 0 auto;">
-<!--        //th:object="${signupForm}"-->
-        <div class="m-3">
-            <div class="form-group row">
-                <label class="col-4 col-form-label">Name: </label>
-                <div class="col-8">
-                    <input type="text" name="name" class="form-control" required />
-=======
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -76,7 +62,6 @@
             <form th:action="@{/api/auth/signup}" method="post">
                 <div class="form-group">
                     <input type="text" id="user-name"  name="username" class="form-control" aria-describedby="emailHelp" required placeholder="UserName"  autofocus="">
->>>>>>> 3c94f75a9ef3cd211be0f1526bbb8d0087e62e6d
                 </div>
                 <div class="form-group">
                     <input type="password" name="password" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="m�?t kh�?u c�?n co? i?t nh�?t m�?t s�? va? m�?t ch?? ca?i , ng??n nh�?t la? 6 ky? t??"  class="form-control"  id="password" placeholder="Password" minlength="6">
@@ -90,19 +75,6 @@
                 <div class="form-group">
                     <input type="email" name="email" class="form-control" placeholder="Email" required="" autofocus="">
                 </div>
-<<<<<<< HEAD
-            </div>
-<!--            <div class="form-group row">-->
-<!--                <label class="col-4 col-form-label">role: </label>-->
-<!--                <div class="col-8">-->
-<!--                    <input type="text" name="appRole" class="form-control"-->
-<!--                           required/>-->
-<!--                </div>-->
-<!--            </div>-->
-            <div>
-                <button type="submit" class="btn btn-primary">Sign Up</button>
-            </div>
-=======
                 <div class="form-group">
                     <input type="number" name="phone" pattern="(?=.*[0-9]{9,});" title="số điện thoại không hợp lệ" class="form-control" placeholder="Phone Number" required="" autofocus="" maxlength="10" minlength="10">
                 </div>
@@ -112,7 +84,6 @@
 
             </form>
 
->>>>>>> 3c94f75a9ef3cd211be0f1526bbb8d0087e62e6d
         </div>
 
     </div>

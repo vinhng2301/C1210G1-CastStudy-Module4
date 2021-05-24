@@ -60,16 +60,6 @@
                     <a href="#" class="flex-c-m trans-04 p-lr-25">
                         Help & FAQs
                     </a>
-<<<<<<< HEAD
-                    <a href="/api/auth/login" class="flex-c-m trans-04 p-lr-25">
-                        My Account
-                    </a>
-                    <a href="#" class="flex-c-m trans-04 p-lr-25">
-                        <span th:utext="${session.get('user').username}"></span>
-                    </a>
-                    <a href="#" class="flex-c-m trans-04 p-lr-25">
-                        <input id="userId" th:value="${session.get('user').userId}" hidden>
-=======
                     <a  class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').getUserId == null}">
                         hello guest
                     </a>
@@ -81,8 +71,8 @@
                     </a>
                     <a href="logout" class="flex-c-m trans-04 p-lr-25" th:if="${session.get('user').getUserId != null}">
                         logout
->>>>>>> 3c94f75a9ef3cd211be0f1526bbb8d0087e62e6d
                     </a>
+                    <input id="userId" th:value="${session.get('user').userId}" hidden>
                 </div>
             </div>
         </div>
