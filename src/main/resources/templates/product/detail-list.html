@@ -17,7 +17,7 @@
     <div class="row g-0">
         <div class="col-sm-6 col-md-8">The list detail</div>
         <div class="col-6 col-md-4">
-            <a th:href="@{/create-city}">Add new</a>
+            <a th:href="@{form/create-detail}">Add new</a>
         </div>
     </div>
     <div>
@@ -27,14 +27,15 @@
                 <th>Size</th>
                 <th>Color</th>
                 <th>Quantity</th>
+                <th></th>
             </tr>
-            <th:block th:each="p,seriable :${list}">
+            <tr th:each="p,seriable :${list}">
                 <td th:utext="${p.getProduct().getProductName()}"></td>
                 <td th:utext="${p.getSize()}"></td>
                 <td th:utext="${p.getColor()}"></td>
                 <td th:utext="${p.getQuantity()}"></td>
                 <td><a th:href="@{edit/detail/{id}(id=${p.getWarehouseId()})}" style="text-decoration: none">Edit</a></td>
-            </th:block>
+            </tr>
 
         </table>
     </div>

@@ -98,6 +98,7 @@ public class AdminController {
 
 
     //Them san pham chi tiet, mau sac ,size,vvv
+
     //hien ra list trc
     @GetMapping("/product/detail/{id}")
     public String getListProductDetail(@PathVariable("id") Long id, Model model) {
@@ -106,7 +107,7 @@ public class AdminController {
         return "product/detail-list";
     }
 
-    @GetMapping("form/create-detail")
+    @GetMapping("/form/create-detail")
     public String getForm(Model model) {
         model.addAttribute("warehouse", new Warehouse());
         return "product/create-detail";
@@ -118,7 +119,7 @@ public class AdminController {
         return "product/detail-list";
     }
 
-    @GetMapping("edit/detail/{id}")
+    @GetMapping("/edit/detail/{id}")
     public String getFormEdit(Model model, @PathVariable("id") Long id) {
         model.addAttribute("warehouse", wareService.findById(id));
         return "product/detail-edit";

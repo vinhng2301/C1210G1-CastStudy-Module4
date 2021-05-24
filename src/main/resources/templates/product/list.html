@@ -18,13 +18,13 @@
     <th:block th:each="product : ${products}">
         <tr>
             <td >
-                <a th:href="@{/product/detail/{id}(id=${product.productId})}"><span th:text="${product.productName}"></span></a>
+                <a style="text-decoration: none" th:href="@{/product/detail/{id}(id=${product.productId})}"><span th:text="${product.productName}"></span></a>
             </td>
             <td th:text="${product.category}"></td>
             <td th:text="${product.description}"></td>
             <td th:text="${product.gender}"></td>
             <td th:text="${product.prices}"></td>
-            <td><a th:href="@{/edit-product/__${product.productId}__ }">Edit</a></td>
+            <td><a style="text-decoration: none" th:href="@{/edit-product/__${product.productId}__ }">Edit</a></td>
         </tr>
     </th:block>
 </table>

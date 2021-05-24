@@ -1,10 +1,49 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<form th:action="@{/create-detail}" th:object="${warehouse}">
+    <table>
+        <tr>
+            <td>Product Name</td>
+            <input  name="product" th:utext="${warehouse.getProduct().getProductName()}">
+        </tr>
+        <tr>
+            <td>Size</td>
+            <select th:name="size" id="size">
+                <option th:value="S">S</option>
+                <option th:value="M">M</option>
+                <option th:value="L">L</option>
+                <option th:value="XL">XL</option>
+                <option th:value="XXL">XXL</option>
+            </select>
+        </tr>
+        <tr>
+            <td>Color</td>
+            <select th:name="size" id="color">
+                <option th:value="Red">Red</option>
+                <option th:value="Blue">Blue</option>
+                <option th:value="Green">Green</option>
+                <option th:value="Grey">Grey</option>
+                <option th:value="Black">Black</option>
+                <option th:value="Pink">Pink</option>
+            </select>
 
+        </tr>
+        <tr>
+            <td>Quantity</td>
+            <input th:value="${quantity}" name="quantity">
+        </tr>
+        <tr>
+            <td>submit</td>
+            <td><input type="submit"></td>
+        </tr>
+    </table>
+
+</form>
 </body>
 </html>
